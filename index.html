@@ -6,15 +6,36 @@
 </head>
 <body>
 
-<header>
-  <h1>Gopikaran Writes</h1>
-  <button onclick="toggleTheme()">🌗</button>
-</header>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="left">
+    ☰ 🔍
+  </div>
 
+  <div class="center">
+    gopikaran writes
+  </div>
+
+  <div class="right">
+    <button onclick="setLang('en')">eng</button>
+    <button onclick="setLang('ta')">tamil</button>
+    <button onclick="setLang('hi')">hindi</button>
+    <button>about</button>
+  </div>
+</div>
+
+<!-- DESCRIPTION -->
+<div class="desc">
+  an permanent description for readers
+</div>
+
+<!-- SEARCH -->
 <input id="search" placeholder="Search #tags or title" onkeyup="searchPost()">
 
-<div id="posts"></div>
+<!-- POSTS -->
+<div id="posts" class="grid"></div>
 
 <script src="script.js"></script>
 </body>
 </html>
+
