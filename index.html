@@ -16,11 +16,22 @@
         .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; letter-spacing: -1px; }
         
         .nav-controls { display: flex; gap: 10px; align-items: center; }
-        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 12px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 12px; }
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 12px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 12px; transition: 0.2s; }
         
-        /* Language Toggle Highlight Style */
+        /* THE DYNAMIC MODE BUTTON */
+        .mode-btn { 
+            background: #000000 !important; 
+            color: #ffffff !important; 
+            border: 2px solid #000000 !important;
+        }
+        body.dark-mode .mode-btn { 
+            background: #ffffff !important; 
+            color: #000000 !important; 
+            border: 2px solid #ffffff !important;
+        }
+
         .btn.active { background: var(--text); color: var(--bg); }
-        .btn:hover { background: var(--text); color: var(--bg); }
+        .btn:hover { opacity: 0.8; }
         
         .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 150px; }
 
@@ -55,7 +66,7 @@
 
 <header>
     <div class="nav-controls">
-        <button class="btn" onclick="toggleTheme()">MODE</button>
+        <button id="modeBtn" class="btn mode-btn" onclick="toggleTheme()">MODE</button>
         <input type="text" id="search" class="search-bar" placeholder="SEARCH #TAG..." onkeyup="filterTags()">
     </div>
     
@@ -82,25 +93,24 @@
     let allArticles = [];
 
     // THEME LOGIC
-    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
     }
 
-    // UPDATED LOAD DATA - Optimized to avoid flash errors
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
     async function init() {
         const grid = document.getElementById('grid');
         try {
             const listRes = await fetch('list.json');
             if (!listRes.ok) throw new Error("list.json not found");
-            
             const fileList = await listRes.json();
             
-            // Clear current articles array before re-filling
             allArticles = [];
-            
-            // Wait for all fetches to finish before rendering
             for (let fileName of fileList) {
                 try {
                     const artRes = await fetch(`data/${fileName}`);
@@ -110,15 +120,12 @@
                         allArticles.push(artData);
                     }
                 } catch (err) {
-                    console.warn(`Skipping ${fileName} due to error`);
+                    console.warn(`Skipping ${fileName}`);
                 }
             }
             renderUI();
         } catch (e) {
-            grid.innerHTML = `<div style="color:red; border:2px solid red; padding:20px;">
-                ERROR: ${e.message} <br> 
-                Check if your data folder and list.json are correct.
-            </div>`;
+            grid.innerHTML = `<div style="color:red; border:2px solid red; padding:20px;">ERROR: ${e.message}</div>`;
         }
     }
 
@@ -126,7 +133,6 @@
         const grid = document.getElementById('grid');
         grid.innerHTML = '';
         
-        // 1. Update Site Branding Text
         const uiText = {
             en: { name: "gopikaran writes", desc: "A permanent space for my thoughts and paintings." },
             ta: { name: "கோபிகரன் எழுதுகிறார்", desc: "எனது எண்ணங்கள் மற்றும் ஓவியங்களுக்கான நிரந்தர இடம்." },
@@ -136,12 +142,10 @@
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         document.getElementById('siteDesc').innerText = uiText[currentLang].desc;
 
-        // 2. Handle Button Highlighting
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById(`lang-${currentLang}`);
         if (activeBtn) activeBtn.classList.add('active');
 
-        // 3. Render Article Cards
         allArticles.forEach(art => {
             const card = document.createElement('a');
             card.className = 'card article-item';
@@ -172,7 +176,6 @@
         });
     }
 
-    // Kick off the site
     init();
 </script>
 </body>
