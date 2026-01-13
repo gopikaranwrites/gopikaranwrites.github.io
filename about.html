@@ -1,15 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - gopikaran writes</title>
     <style>
-        body { padding: 50px; text-align: center; font-family: sans-serif; border: 3px solid black; margin: 20px; }
-        .btn { border: 2px solid black; padding: 10px; text-decoration: none; color: black; font-weight: bold; }
+        :root { --bg: #ffffff; --text: #000000; --border: #000000; }
+        body.dark-mode { --bg: #000000; --text: #ffffff; --border: #ffffff; }
+        
+        * { box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; font-family: 'Courier New', Courier, monospace; transition: 0.3s; }
+        
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        /* BACK BUTTON */
+        .back-btn { display: inline-block; border: 2px solid var(--border); padding: 5px 15px; text-decoration: none; color: var(--text); font-weight: bold; margin-bottom: 30px; text-transform: uppercase; font-size: 12px; }
+        .back-btn:hover { background: var(--text); color: var(--bg); }
+
+        /* ABOUT HEADER */
+        .profile-section { border: 3px solid var(--border); padding: 40px; text-align: center; margin-bottom: 40px; }
+        .profile-section h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: -2px; }
+        .profile-section p { font-style: italic; margin-top: 10px; opacity: 0.8; }
+
+        /* CONTENT AREA */
+        .about-content { font-size: 1.2rem; line-height: 1.8; }
+        .about-content b { background: var(--text); color: var(--bg); padding: 0 4px; }
+
+        /* MINIMAL DIVIDER */
+        .divider { height: 3px; background: var(--border); margin: 40px 0; width: 50px; }
     </style>
 </head>
 <body>
-    <h1>About Me</h1>
-    <p>This is the separate about page for Gopikaran.</p>
-    <br><br>
-    <a href="index.html" class="btn">BACK HOME</a>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← BACK TO FEED</a>
+
+        <div class="profile-section">
+            <h1>Gopikaran</h1>
+            <p>Painter & Writer</p>
+        </div>
+
+        <div class="about-content">
+            <p>Welcome to my digital space. I created this website to host my <b>paintings</b> and <b>thoughts</b> in a way that feels permanent, away from the noise of social media.</p>
+            
+            <div class="divider"></div>
+            
+            <p>Everything you see here—from the code to the canvas—is a part of my creative journey. I believe in <b>minimalism</b>, black-and-white aesthetics, and the power of a single line.</p>
+            
+            <p>Thank you for visiting.</p>
+        </div>
+    </div>
+
+    <script>
+        // THIS IS THE FIX: It checks the theme when the page opens
+        function applyTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // Run immediately
+        applyTheme();
+
+        // Optional: Listen for storage changes (if user changes theme in another tab)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') applyTheme();
+        });
+    </script>
 </body>
 </html>
