@@ -86,24 +86,28 @@
     }
 
     // LOAD DATA
-    async function init() {
+   async function init() {
+    const grid = document.getElementById('grid');
     try {
-        console.log("Fetching list.json...");
-        const listRes = await fetch('./list.json'); // Added ./ to be sure
+        const listRes = await fetch('list.json');
+        if (!listRes.ok) throw new Error("Could not find list.json");
+        
         const fileList = await listRes.json();
-        console.log("Files found:", fileList);
         
         for (let fileName of fileList) {
-            console.log("Fetching article:", fileName);
-            const artRes = await fetch(`./data/${fileName}`);
+            const artRes = await fetch(`data/${fileName}`);
+            if (!artRes.ok) throw new Error("Could not find data/" + fileName);
+            
             const artData = await artRes.json();
             artData.fileSource = fileName;
             allArticles.push(artData);
         }
         renderUI();
-    } catch (e) { 
-        console.error("Error details:", e); 
-        document.getElementById('grid').innerHTML = "Check Console: Files not found.";
+    } catch (e) {
+        grid.innerHTML = `<div style="color:red; border:2px solid red; padding:20px;">
+            ERROR: ${e.message} <br> 
+            Make sure your files are named correctly on GitHub!
+        </div>`;
     }
 }
 
