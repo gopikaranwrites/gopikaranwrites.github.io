@@ -1,16 +1,16 @@
 {
-  "tags": "#art #fruite",
-  "image": "images/post1.jfif",
+  "tags": "#art #tutorial",
+  "image": "images/painting1.jpg",
   "en": {
-    "title": "My First story",
-    "body": "This is the story of my first painting. I used black and white to express simplicity."
+    "title": "How I Paint #art",
+    "body": "This is my first paragraph. I love <b>Black and White</b> art style.\n\n[IMAGE]\n\nThis paragraph appears <b>after</b> the image. \n\nSee how the line breaks work!"
   },
   "ta": {
-    "title": "எனது முதல் படைப்பு",
-    "body": "இது எனது முதல் ஓவியத்தின் கதை. எளிமையை வெளிப்படுத்த கருப்பு மற்றும் வெள்ளை நிறத்தைப் பயன்படுத்தினேன்."
+    "title": "நான் எப்படி வரைகிறேன் #art",
+    "body": "இது எனது முதல் பத்தி. எனக்கு <b>கருப்பு மற்றும் வெள்ளை</b> கலை பாணி பிடிக்கும்.\n\n[IMAGE]\n\nஇந்தப் பகுதி படத்திற்குப் <b>பிறகு</b> தோன்றும்."
   },
   "hi": {
-    "title": "मेरी पहली कृति #art",
-    "body": "यह मेरी पहली पेंटिंग की कहानी है। सादगी व्यक्त करने के लिए मैंने काले और सफेद रंग का इस्तेमाल किया।"
+    "title": "मैं कैसे पेंट करता हूँ #art",
+    "body": "यह मेरा पहला पैराग्राफ है। मुझे <b>ब्लैक एंड व्हाइट</b> आर्ट स्टाइल पसंद है।\n\n[IMAGE]\n\nयह पैराग्राफ इमेज के <b>बाद</b> दिखाई देता है।"
   }
 }
