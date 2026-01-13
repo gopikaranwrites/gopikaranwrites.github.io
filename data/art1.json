@@ -1,0 +1,17 @@
+{
+  "id": "post_001",
+  "tags": "#art #coding #life",
+  "image": "images/my-photo.jpg",
+  "en": {
+    "title": "My Creative Journey #art",
+    "body": "This is the English version of the story. You can write long paragraphs here using \\n for new lines."
+  },
+  "ta": {
+    "title": "எனது படைப்பு பயணம் #art",
+    "body": "இது கதையின் தமிழ் பதிப்பு. உங்கள் கட்டுரையை இங்கே தட்டச்சு செய்யவும்."
+  },
+  "hi": {
+    "title": "मेरी रचनात्मक यात्रा #art",
+    "body": "यह कहानी का हिंदी संस्करण है। अपना लेख यहाँ लिखें।"
+  }
+}
