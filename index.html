@@ -1,41 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Gopikaran Writes</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gopikaran writes</title>
+    <style>
+        /* 1. RESET & BASE STYLES */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --border: #000000;
+        }
+
+        body.dark-mode {
+            --bg: #000000;
+            --text: #ffffff;
+            --border: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        /* 2. HEADER STYLES */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 3px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; }
+
+        .controls { display: flex; gap: 10px; align-items: center; }
+
+        button, input {
+            padding: 5px 10px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 3. HERO SECTION */
+        .hero {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .description-box {
+            border: 2px solid var(--border);
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 4. RESPONSIVE GRID (The most important part) */
+        .article-grid {
+            display: grid;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Web View: 3 Columns */
+        @media (min-width: 768px) {
+            .article-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Mobile View: 1 Column (Automatically happens if not specified) */
+
+        .card {
+            border: 3px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-image {
+            height: 180px;
+            border-bottom: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .card-title {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* 5. UTILITIES */
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="left">
-    ☰ 🔍
-  </div>
+    <header>
+        <div class="controls">
+            <button onclick="toggleTheme()">MODE</button>
+            <input type="text" id="search" placeholder="Search #tag..." onkeyup="searchTags()">
+        </div>
 
-  <div class="center">
-    gopikaran writes
-  </div>
+        <div class="logo" id="siteTitle">gopikaran writes</div>
 
-  <div class="right">
-    <button onclick="setLang('en')">eng</button>
-    <button onclick="setLang('ta')">tamil</button>
-    <button onclick="setLang('hi')">hindi</button>
-    <button>about</button>
-  </div>
-</div>
+        <div class="controls">
+            <div style="border: 2px solid var(--border); display: flex;">
+                <button style="border:none;" onclick="setLang('en')">eng</button>
+                <button style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none;" onclick="setLang('ta')">tamil</button>
+                <button style="border:none;" onclick="setLang('hi')">hindhi</button>
+            </div>
+            <button>about</button>
+        </div>
+    </header>
 
-<!-- DESCRIPTION -->
-<div class="desc">
-  an permanent description for readers
-</div>
+    <section class="hero">
+        <div class="description-box">
+            <h2 id="siteDesc">an permanent description for readers</h2>
+        </div>
+    </section>
 
-<!-- SEARCH -->
-<input id="search" placeholder="Search #tags or title" onkeyup="searchPost()">
+    <main class="article-grid" id="grid">
+        <div class="card article-item" data-tags="#coding">
+            <div class="card-image">image</div>
+            <div class="card-title">How to Code #coding</div>
+        </div>
+        <div class="card article-item" data-tags="#life">
+            <div class="card-image">image</div>
+            <div class="card-title">Daily Life #life</div>
+        </div>
+        <div class="card article-item" data-tags="#art">
+            <div class="card-image">image</div>
+            <div class="card-title">My Paintings #art</div>
+        </div>
+    </main>
 
-<!-- POSTS -->
-<div id="posts" class="grid"></div>
+    <script>
+        // DARK MODE
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
 
-<script src="script.js"></script>
+        // LANGUAGE
+        const textData = {
+            en: { title: "gopikaran writes", desc: "an permanent description for readers" },
+            ta: { title: "கோபிகரன் எழுதுகிறார்", desc: "வாசகர்களுக்கான நிரந்தர விளக்கம்" },
+            hi: { title: "गोपीकरण लिखते हैं", desc: "पाठकों के लिए एक स्थायी विवरण" }
+        };
+
+        function setLang(l) {
+            document.getElementById('siteTitle').innerText = textData[l].title;
+            document.getElementById('siteDesc').innerText = textData[l].desc;
+        }
+
+        // SEARCH BY #TAG
+        function searchTags() {
+            let filter = document.getElementById('search').value.toLowerCase();
+            let items = document.querySelectorAll('.article-item');
+            
+            items.forEach(item => {
+                let tags = item.getAttribute('data-tags');
+                if (tags.includes(filter)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
-
