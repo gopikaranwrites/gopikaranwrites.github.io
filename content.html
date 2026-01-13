@@ -8,14 +8,32 @@
         :root { --bg: #fff; --text: #000; --border: #000; }
         body.dark-mode { --bg: #000; --text: #fff; --border: #fff; }
         
-        body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; font-family: sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; font-family: 'Courier New', Courier, monospace; transition: 0.3s; }
         .container { max-width: 800px; margin: 0 auto; }
         
-        .back-btn { display: inline-block; border: 2px solid var(--border); padding: 5px 15px; text-decoration: none; color: var(--text); font-weight: bold; margin-bottom: 20px; }
-        .title-box { border: 3px solid var(--border); padding: 30px; text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; }
-        .article-img { width: 100%; border: 3px solid var(--border); margin: 30px 0; display: block; }
-        .content-body { font-size: 1.2rem; line-height: 1.8; white-space: pre-wrap; margin-bottom: 20px; }
-        .loading { text-align: center; font-style: italic; }
+        .back-btn { display: inline-block; border: 2px solid var(--border); padding: 5px 15px; text-decoration: none; color: var(--text); font-weight: bold; margin-bottom: 20px; text-transform: uppercase; font-size: 12px; }
+        .back-btn:hover { background: var(--text); color: var(--bg); }
+
+        .title-box { border: 3px solid var(--border); padding: 30px; text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; }
+
+        /* MINIMAL IMAGE STYLE */
+        .image-wrapper { text-align: center; margin: 40px 0; }
+        .article-img { 
+            max-width: 65%; /* Makes the image smaller/minimal */
+            height: auto;
+            border: 3px solid var(--border); 
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        /* Responsive for mobile */
+        @media (max-width: 600px) {
+            .article-img { max-width: 100%; }
+            .title-box { font-size: 1.4rem; }
+        }
+
+        .content-body { font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; margin-bottom: 20px; }
+        .loading { text-align: center; font-style: italic; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -30,14 +48,15 @@
             
             <div class="content-body" id="postBodyTop"></div>
             
-            <img src="" alt="Article Image" class="article-img" id="postImage">
+            <div class="image-wrapper">
+                <img src="" alt="Article Image" class="article-img" id="postImage">
+            </div>
             
             <div class="content-body" id="postBodyBottom"></div>
         </div>
     </div>
 
     <script>
-        // Apply Dark Mode if saved
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
         }
@@ -49,23 +68,20 @@
         async function fetchArticle() {
             try {
                 const response = await fetch(`data/${fileName}`);
+                if (!response.ok) throw new Error("File not found");
                 const data = await response.json();
                 const content = data[lang];
 
-                // 1. Update Title (Allows <b> tags)
+                // innerHTML allows <b> tags from your JSON
                 document.getElementById('postTitle').innerHTML = content.title;
-                
-                // 2. Setup Image
                 document.getElementById('postImage').src = data.image;
 
-                // 3. Logic for splitting text around [IMAGE]
                 const fullText = content.body;
                 if (fullText.includes("[IMAGE]")) {
                     const parts = fullText.split("[IMAGE]");
                     document.getElementById('postBodyTop').innerHTML = parts[0];
                     document.getElementById('postBodyBottom').innerHTML = parts[1] || "";
                 } else {
-                    // If no [IMAGE] tag is found, put all text at the top
                     document.getElementById('postBodyTop').innerHTML = fullText;
                     document.getElementById('postBodyBottom').style.display = "none";
                 }
@@ -75,7 +91,7 @@
                 document.title = content.title + " - gopikaran writes";
 
             } catch (error) {
-                document.getElementById('loader').innerText = "Error loading article.";
+                document.getElementById('loader').innerText = "Error: Article file missing or broken.";
                 console.error(error);
             }
         }
