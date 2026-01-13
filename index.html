@@ -5,177 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gopikaran writes</title>
     <style>
-        /* 1. RESET & BASE STYLES */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        :root { --bg: #fff; --text: #000; --border: #000; }
+        body.dark-mode { --bg: #000; --text: #fff; --border: #fff; }
+        body { background: var(--bg); color: var(--text); margin: 0; font-family: sans-serif; transition: 0.3s; }
         
-        :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --border: #000000;
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 3px solid var(--border); flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; flex-grow: 1; text-align: center; }
+        
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 10px; cursor: pointer; font-weight: bold; text-decoration: none; }
+        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); }
 
-        body.dark-mode {
-            --bg: #000000;
-            --text: #ffffff;
-            --border: #ffffff;
-        }
+        .hero { padding: 30px; text-align: center; }
+        .description-box { border: 2px solid var(--border); padding: 15px; max-width: 800px; margin: 0 auto; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            transition: 0.3s;
-        }
+        /* INFINITE GRID: 1 column mobile, 3 columns web */
+        .article-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        /* 2. HEADER STYLES */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 3px solid var(--border);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; }
-
-        .controls { display: flex; gap: 10px; align-items: center; }
-
-        button, input {
-            padding: 5px 10px;
-            border: 2px solid var(--border);
-            background: transparent;
-            color: var(--text);
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* 3. HERO SECTION */
-        .hero {
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .description-box {
-            border: 2px solid var(--border);
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* 4. RESPONSIVE GRID (The most important part) */
-        .article-grid {
-            display: grid;
-            gap: 30px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Web View: 3 Columns */
-        @media (min-width: 768px) {
-            .article-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        /* Mobile View: 1 Column (Automatically happens if not specified) */
-
-        .card {
-            border: 3px solid var(--border);
-            overflow: hidden;
-        }
-
-        .card-image {
-            height: 180px;
-            border-bottom: 3px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .card-title {
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* 5. UTILITIES */
+        .card { border: 3px solid var(--border); cursor: pointer; text-decoration: none; color: inherit; }
+        .card-img { height: 180px; border-bottom: 3px solid var(--border); overflow: hidden; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .card-title { padding: 15px; font-weight: bold; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="controls">
-            <button onclick="toggleTheme()">MODE</button>
-            <input type="text" id="search" placeholder="Search #tag..." onkeyup="searchTags()">
+<header>
+    <div>
+        <button class="btn" onclick="toggleTheme()">MODE</button>
+        <input type="text" id="search" class="search-bar" placeholder="Search #tag..." onkeyup="filterTags()">
+    </div>
+    <div class="logo" id="siteName">gopikaran writes</div>
+    <div style="display: flex; gap: 10px;">
+        <div style="border: 2px solid var(--border); display: flex;">
+            <button class="btn" style="border:none" onclick="changeLang('en')">eng</button>
+            <button class="btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">tamil</button>
+            <button class="btn" style="border:none" onclick="changeLang('hi')">hindhi</button>
         </div>
+        <a href="about.html" class="btn">about</a>
+    </div>
+</header>
 
-        <div class="logo" id="siteTitle">gopikaran writes</div>
+<section class="hero">
+    <div class="description-box" id="siteDesc">an permanent description for readers</div>
+</section>
 
-        <div class="controls">
-            <div style="border: 2px solid var(--border); display: flex;">
-                <button style="border:none;" onclick="setLang('en')">eng</button>
-                <button style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none;" onclick="setLang('ta')">tamil</button>
-                <button style="border:none;" onclick="setLang('hi')">hindhi</button>
-            </div>
-            <button>about</button>
-        </div>
-    </header>
+<main class="article-grid" id="grid"></main>
 
-    <section class="hero">
-        <div class="description-box">
-            <h2 id="siteDesc">an permanent description for readers</h2>
-        </div>
-    </section>
+<script>
+    let currentLang = 'en';
+    let allArticles = [];
 
-    <main class="article-grid" id="grid">
-        <div class="card article-item" data-tags="#coding">
-            <div class="card-image">image</div>
-            <div class="card-title">How to Code #coding</div>
-        </div>
-        <div class="card article-item" data-tags="#life">
-            <div class="card-image">image</div>
-            <div class="card-title">Daily Life #life</div>
-        </div>
-        <div class="card article-item" data-tags="#art">
-            <div class="card-image">image</div>
-            <div class="card-title">My Paintings #art</div>
-        </div>
-    </main>
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
 
-    <script>
-        // DARK MODE
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
+    async function loadData() {
+        const response = await fetch('list.json');
+        const fileList = await response.json();
+        
+        const grid = document.getElementById('grid');
+        grid.innerHTML = ''; 
+
+        for (let file of fileList) {
+            const res = await fetch(`data/${file}`);
+            const data = await res.json();
+            data.fileName = file; // Store filename for linking
+            allArticles.push(data);
+            renderCard(data);
         }
+    }
 
-        // LANGUAGE
-        const textData = {
-            en: { title: "gopikaran writes", desc: "an permanent description for readers" },
-            ta: { title: "கோபிகரன் எழுதுகிறார்", desc: "வாசகர்களுக்கான நிரந்தர விளக்கம்" },
-            hi: { title: "गोपीकरण लिखते हैं", desc: "पाठकों के लिए एक स्थायी विवरण" }
+    function renderCard(article) {
+        const grid = document.getElementById('grid');
+        const card = document.createElement('a');
+        card.className = 'card article-item';
+        card.href = `content.html?file=${article.fileName}&lang=${currentLang}`;
+        card.setAttribute('data-tags', article.tags.toLowerCase());
+        card.innerHTML = `
+            <div class="card-img"><img src="${article.image}" onerror="this.src='https://via.placeholder.com/300x180?text=Image'"></div>
+            <div class="card-title">${article[currentLang].title}</div>
+        `;
+        grid.appendChild(card);
+    }
+
+    function changeLang(lang) {
+        currentLang = lang;
+        // Update static site text
+        const translations = {
+            en: { name: "gopikaran writes", desc: "an permanent description for readers" },
+            ta: { name: "கோபிகரன் எழுதுகிறார்", desc: "வாசகர்களுக்கான நிரந்தர விளக்கம்" },
+            hi: { name: "गोपीकरण लिखते हैं", desc: "पाठकों के लिए एक स्थायी विवरण" }
         };
+        document.getElementById('siteName').innerText = translations[lang].name;
+        document.getElementById('siteDesc').innerText = translations[lang].desc;
+        
+        // Refresh cards to update titles
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '';
+        allArticles.forEach(renderCard);
+    }
 
-        function setLang(l) {
-            document.getElementById('siteTitle').innerText = textData[l].title;
-            document.getElementById('siteDesc').innerText = textData[l].desc;
-        }
+    function filterTags() {
+        const query = document.getElementById('search').value.toLowerCase();
+        document.querySelectorAll('.article-item').forEach(item => {
+            const tags = item.getAttribute('data-tags');
+            item.classList.toggle('hidden', !tags.includes(query));
+        });
+    }
 
-        // SEARCH BY #TAG
-        function searchTags() {
-            let filter = document.getElementById('search').value.toLowerCase();
-            let items = document.querySelectorAll('.article-item');
-            
-            items.forEach(item => {
-                let tags = item.getAttribute('data-tags');
-                if (tags.includes(filter)) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-        }
-    </script>
+    loadData();
+</script>
 </body>
 </html>
