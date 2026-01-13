@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "My First View",
+    "tags": ["#myview", "#socialissue"],
+    "image": "images/post1.jpg",
+    "content": {
+      "en": "This is my first article<br><br><b>Writing is my freedom</b><br><br><img src='images/post1.jpg'><br><br>End of article.",
+      "ta": "இது என் முதல் கட்டுரை",
+      "hi": "यह मेरा पहला लेख है"
+    }
+  }
+]
