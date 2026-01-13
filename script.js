@@ -3,8 +3,12 @@ let lang="en";
 fetch("posts.json")
 .then(r=>r.json())
 .then(d=>{
+ render(d);
+});
+
+function render(data){
  let html="";
- d.forEach(p=>{
+ data.forEach(p=>{
   html+=`
   <div class="card">
    <img src="${p.image}">
@@ -14,13 +18,18 @@ fetch("posts.json")
   </div>`;
  });
  document.getElementById("posts").innerHTML=html;
-});
+}
 
 function searchPost(){
  let v=document.getElementById("search").value.toLowerCase();
  document.querySelectorAll(".card").forEach(c=>{
-  c.style.display = c.innerText.toLowerCase().includes(v)?"block":"none";
+  c.style.display=c.innerText.toLowerCase().includes(v)?"block":"none";
  });
+}
+
+function setLang(l){
+ lang=l;
+ alert("Language set to "+l);
 }
 
 function toggleTheme(){
