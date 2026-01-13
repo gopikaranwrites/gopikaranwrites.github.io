@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+const id = new URLSearchParams(window.location.search).get("id");
+fetch("posts.json")
+.then(r=>r.json())
+.then(d=>{
+ let p = d.find(x=>x.id==id);
+ document.getElementById("content").innerHTML = p.content.en;
+});
+</script>
+
+</body>
+</html>
