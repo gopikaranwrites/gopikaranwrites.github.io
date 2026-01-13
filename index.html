@@ -87,19 +87,25 @@
 
     // LOAD DATA
     async function init() {
-        try {
-            const listRes = await fetch('list.json');
-            const fileList = await listRes.json();
-            
-            for (let fileName of fileList) {
-                const artRes = await fetch(`data/${fileName}`);
-                const artData = await artRes.json();
-                artData.fileSource = fileName; // Save reference
-                allArticles.push(artData);
-            }
-            renderUI();
-        } catch (e) { console.error("Data loading failed", e); }
+    try {
+        console.log("Fetching list.json...");
+        const listRes = await fetch('./list.json'); // Added ./ to be sure
+        const fileList = await listRes.json();
+        console.log("Files found:", fileList);
+        
+        for (let fileName of fileList) {
+            console.log("Fetching article:", fileName);
+            const artRes = await fetch(`./data/${fileName}`);
+            const artData = await artRes.json();
+            artData.fileSource = fileName;
+            allArticles.push(artData);
+        }
+        renderUI();
+    } catch (e) { 
+        console.error("Error details:", e); 
+        document.getElementById('grid').innerHTML = "Check Console: Files not found.";
     }
+}
 
     function renderUI() {
         const grid = document.getElementById('grid');
