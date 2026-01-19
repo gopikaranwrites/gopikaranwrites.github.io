@@ -18,39 +18,64 @@
         .nav-controls { display: flex; gap: 10px; align-items: center; }
         .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 12px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 12px; transition: 0.2s; }
         
-        /* THE DYNAMIC MODE BUTTON */
-        .mode-btn { 
-            background: #000000 !important; 
-            color: #ffffff !important; 
-            border: 2px solid #000000 !important;
-        }
-        body.dark-mode .mode-btn { 
-            background: #ffffff !important; 
-            color: #000000 !important; 
-            border: 2px solid #ffffff !important;
-        }
+        .mode-btn { background: #000000 !important; color: #ffffff !important; border: 2px solid #000000 !important; }
+        body.dark-mode .mode-btn { background: #ffffff !important; color: #000000 !important; border: 2px solid #ffffff !important; }
 
         .btn.active { background: var(--text); color: var(--bg); }
-        .btn:hover { opacity: 0.8; }
         
-        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 150px; }
+        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 180px; }
 
-        /* HERO */
-        .hero { padding: 40px 20px; text-align: center; }
-        .description-box { border: 3px solid var(--border); padding: 20px; max-width: 800px; margin: 0 auto; font-style: italic; }
+        /* NEW HERO LAYOUT: Banner Shifted Left + 3 Side Boxes */
+        .hero-container { 
+            max-width: 1200px; 
+            margin: 30px auto; 
+            padding: 0 20px;
+            display: flex;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .description-box { 
+            flex: 3; /* Shorter width to shift left */
+            border: 3px solid var(--border); 
+            padding: 30px; 
+            font-style: italic; 
+            font-weight: 900; /* POINT 3: BOLD FONT */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .hero-side-nav {
+            flex: 1; /* Space for the 3 boxes */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .side-btn {
+            flex: 1;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        body.dark-mode .side-btn { background: #ffffff; color: #000000; }
+        .side-btn:hover { opacity: 0.8; }
 
         /* GRID SYSTEM */
-        .article-grid { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 30px; 
-            padding: 20px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
-        @media (min-width: 768px) { 
-            .article-grid { grid-template-columns: repeat(3, 1fr); } 
-        }
+        .article-grid { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
 
         /* CARDS */
         .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform 0.2s; }
@@ -67,7 +92,7 @@
 <header>
     <div class="nav-controls">
         <button id="modeBtn" class="btn mode-btn" onclick="toggleTheme()">MODE</button>
-        <input type="text" id="search" class="search-bar" placeholder="SEARCH #TAG..." onkeyup="filterTags()">
+        <input type="text" id="search" class="search-bar" placeholder="SEARCH TITLE, BODY, TAGS..." onkeyup="deepSearch()">
     </div>
     
     <div class="logo" id="siteName">gopikaran writes</div>
@@ -82,52 +107,46 @@
     </div>
 </header>
 
-<section class="hero">
+<section class="hero-container">
     <div class="description-box" id="siteDesc">Loading space...</div>
+    
+    <div class="hero-side-nav">
+        <button class="side-btn" onclick="quickFilter('#social')">social view</button>
+        <button class="side-btn" onclick="quickFilter('#review')">review</button>
+        <button class="side-btn" onclick="quickFilter('#random')">random</button>
+    </div>
 </section>
 
 <main class="article-grid" id="grid"></main>
 
 <script>
-    // CHANGED: Set default to 'ta' (Tamil) if no preference is saved
     let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
-    // THEME LOGIC
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); }
 
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
 
     async function init() {
         const grid = document.getElementById('grid');
         try {
             const listRes = await fetch('list.json');
-            if (!listRes.ok) throw new Error("list.json not found");
             const fileList = await listRes.json();
             
             allArticles = [];
             for (let fileName of fileList) {
-                try {
-                    const artRes = await fetch(`data/${fileName}`);
-                    if (artRes.ok) {
-                        const artData = await artRes.json();
-                        artData.fileSource = fileName;
-                        allArticles.push(artData);
-                    }
-                } catch (err) {
-                    console.warn(`Skipping ${fileName}`);
+                const artRes = await fetch(`data/${fileName}`);
+                if (artRes.ok) {
+                    const artData = await artRes.json();
+                    artData.fileSource = fileName;
+                    allArticles.push(artData);
                 }
             }
             renderUI();
-        } catch (e) {
-            grid.innerHTML = `<div style="color:red; border:2px solid red; padding:20px;">ERROR: ${e.message}</div>`;
-        }
+        } catch (e) { console.error(e); }
     }
 
     function renderUI() {
@@ -135,23 +154,25 @@
         grid.innerHTML = '';
         
         const uiText = {
-            en: { name: "gopikaran writes", desc: "Here, you won’t find answers.Instead, questions overflow.But those very questions will lead you to a  Place of Wisdom." },
-            ta: { name: "கோபிகரன் எழுதுகிறார்", desc: "இங்கு பதில்கள் கிடைக்காது;அதற்கு பதிலாக கேள்விகளே மிஞ்சும்.ஆனால் அந்தக் கேள்விகள்தான்உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
-            hi: { name: "गोपीकरण लिखते हैं", desc: "यहाँ आपको उत्तर नहीं मिलेंगे;इसके बजाय प्रश्न ही अधिक होंगे। लेकिन वही प्रश्न आपको ज्ञान के स्थान की ओर ले जाएँगे।" }
+            en: { name: "gopikaran writes", desc: "Here, you won’t find answers. Instead, questions overflow. But those very questions will lead you to a Place of Wisdom." },
+            ta: { name: "கோபிகரன் எழுதுகிறார்", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும். ஆனால் இந்தக் கேள்விகள்தான் உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
+            hi: { name: "गोपीकरण लिखते हैं", desc: "यहाँ आपको उत्तर नहीं मिलेंगे; इसके बजाय प्रश्न ही अधिक होंगे। लेकिन वही प्रश्न आपको ज्ञान के स्थान की ओर ले जाएँगे।" }
         };
         
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         document.getElementById('siteDesc').innerText = uiText[currentLang].desc;
 
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.getElementById(`lang-${currentLang}`);
-        if (activeBtn) activeBtn.classList.add('active');
+        document.getElementById(`lang-${currentLang}`).classList.add('active');
 
-        allArticles.forEach(art => {
+        allArticles.forEach((art, index) => {
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
-            card.setAttribute('data-tags', art.tags.toLowerCase());
+            
+            // POINT 2: Store Title, Body, and Tags for Deep Search
+            const searchData = (art[currentLang].title + " " + art[currentLang].body + " " + art.tags).toLowerCase();
+            card.setAttribute('data-searchable', searchData);
             
             card.innerHTML = `
                 <div class="card-img">
@@ -169,12 +190,20 @@
         renderUI();
     }
 
-    function filterTags() {
-        const query = document.getElementById('search').value.toLowerCase();
+    // POINT 2: Deep Search Function
+    function deepSearch() {
+        const query = document.getElementById('search').value.toLowerCase().trim();
         document.querySelectorAll('.article-item').forEach(item => {
-            const tags = item.getAttribute('data-tags');
-            item.classList.toggle('hidden', !tags.includes(query));
+            const content = item.getAttribute('data-searchable');
+            item.classList.toggle('hidden', !content.includes(query));
         });
+    }
+
+    // POINT 1: Function for the 3 Side Boxes
+    function quickFilter(tag) {
+        const searchInput = document.getElementById('search');
+        searchInput.value = tag;
+        deepSearch();
     }
 
     init();
