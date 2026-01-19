@@ -13,90 +13,115 @@
         
         .container { max-width: 800px; margin: 0 auto; }
         
-        /* ROUNDED BACK BUTTON (From Sketch) */
+        /* SHARP SQUARE BACK BUTTON */
         .back-btn { 
             display: inline-block; 
             border: 2px solid var(--border); 
-            padding: 5px 25px; 
+            padding: 5px 20px; 
             text-decoration: none; 
             color: var(--text); 
             font-weight: bold; 
-            margin-bottom: 20px; 
-            text-transform: lowercase; 
-            font-size: 16px; 
-            border-radius: 50px; /* Makes it pill-shaped like the sketch */
+            margin-bottom: 25px; 
+            text-transform: uppercase; 
+            font-size: 14px; 
         }
         .back-btn:hover { background: var(--text); color: var(--bg); }
 
-        /* PROFILE SECTION (From Sketch) */
+        /* PROFILE SECTION - SHARP CORNERS & CENTERED */
         .profile-section { 
             border: 3px solid var(--border); 
-            padding: 30px 20px; 
+            padding: 40px 20px; 
             text-align: center; 
             margin-bottom: 30px; 
-            border-radius: 20px; /* Rounded corners like sketch */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .profile-section h1 { margin: 0; font-size: 2.8rem; text-transform: uppercase; }
+        .profile-section h1 { 
+            margin: 0; 
+            font-size: 2.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
         .skills-tagline { 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             margin: 15px 0; 
-            letter-spacing: 1px;
             font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.6;
         }
-        .motto { font-size: 1.5rem; margin-top: 10px; }
+        .motto { 
+            font-size: 1.2rem; 
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
 
-        /* YOUTUBE LINK BOX (From Sketch) */
+        /* YOUTUBE BOX - FULL WIDTH & ALIGNED */
         .yt-box { 
             border: 3px solid var(--border); 
             display: flex; 
-            align-items: center; 
-            border-radius: 20px; 
-            overflow: hidden; 
+            align-items: stretch; /* Makes left and right side same height */
             margin-bottom: 30px;
+            width: 100%;
         }
         .yt-img-placeholder { 
             border-right: 3px solid var(--border); 
-            padding: 15px 30px; 
+            width: 120px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
-            transform: rotate(-15deg); /* Slanted "image" text like sketch */
+            text-transform: uppercase;
+            background: rgba(0,0,0,0.05);
         }
+        body.dark-mode .yt-img-placeholder { background: rgba(255,255,255,0.1); }
+
         .yt-link { 
             flex-grow: 1; 
-            text-align: center; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-decoration: none; 
             color: var(--text); 
-            font-size: 1.4rem; 
+            font-size: 1.2rem; 
             font-weight: bold;
+            padding: 20px;
+            text-align: center;
         }
+        .yt-link:hover { background: var(--text); color: var(--bg); }
 
-        /* CONTENT AREA */
-        .about-content { font-size: 1.2rem; line-height: 1.6; }
-        .line-decoration { margin-top: 20px; border-top: 2px solid var(--border); width: 100%; opacity: 0.5; }
+        /* CONTENT AREA - CLEAN */
+        .about-content { 
+            font-size: 1.1rem; 
+            line-height: 1.8; 
+            text-align: left;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <a href="index.html" class="back-btn">back</a>
+        <a href="index.html" class="back-btn">← back</a>
 
         <div class="profile-section">
             <h1>GOPIKARAN R</h1>
-            <p class="skills-tagline"> Writer | Painter | Poet | Singer | Actor | Leader | Learner | Developer | Editor</p>
-            <p class="motto">Jack of all trades, master of none – but curious about everything</p>
+            <p class="skills-tagline">Writer | Painter | Poet | Singer | Actor | Leader | Learner | Developer | Editor</p>
+            <p class="motto">"Jack of all trades, master of none – but curious about everything"</p>
         </div>
 
         <div class="yt-box">
-            <div class="yt-img-placeholder">image</div>
-            <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="yt-link">my yt channel link</a>
+            <div class="yt-img-placeholder">
+                image
+            </div>
+            <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="yt-link">
+                my yt channel link
+            </a>
         </div>
 
         <div class="about-content">
             <p>Welcome, reader.</p>
-            <p>This is where I host my creative experiments and permanent thoughts.</p>
-            
-            <div class="line-decoration"></div>
-            <div class="line-decoration" style="width: 90%; margin-left: auto;"></div>
-            <div class="line-decoration" style="width: 95%;"></div>
+            <p>This is where I host my creative experiments and permanent thoughts. This space is a digital archive of my journey through art and words.</p>
         </div>
     </div>
 
