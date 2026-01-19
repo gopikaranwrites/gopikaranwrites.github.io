@@ -27,7 +27,7 @@
         }
         .back-btn:hover { background: var(--text); color: var(--bg); }
 
-        /* PROFILE SECTION - SHARP CORNERS & CENTERED */
+        /* PROFILE SECTION - REMAINS BOLD */
         .profile-section { 
             border: 3px solid var(--border); 
             padding: 40px 20px; 
@@ -53,29 +53,36 @@
         }
         .motto { 
             font-size: 1.2rem; 
-            margin: 5px 0 0 0;
-            font-style:"Fira Sans",sans-serif;
+            margin: 0;
+            font-family: "Fira Sans", serif;
+            font-weight: bold;  
         }
 
-        /* YOUTUBE BOX - FULL WIDTH & ALIGNED */
+        /* YOUTUBE BOX - THIN 1PX BORDER */
         .yt-box { 
-            border: 3px solid var(--border); 
+            border: 1px solid var(--border); /* Changed from 3px to 1px */
             display: flex; 
-            align-items: stretch; /* Makes left and right side same height */
+            align-items: stretch; 
             margin-bottom: 30px;
             width: 100%;
+            overflow: hidden;
         }
         .yt-img-placeholder { 
-            border-right: 3px solid var(--border); 
-            width: 120px; 
+            border-right: 1px solid var(--border); /* Matched to 1px */
+            width: 100px; 
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            background: rgba(0,0,0,0.05);
+            background: rgba(0,0,0,0.03);
         }
-        body.dark-mode .yt-img-placeholder { background: rgba(255,255,255,0.1); }
+        .yt-img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        body.dark-mode .yt-img-placeholder { background: rgba(255,255,255,0.05); }
 
         .yt-link { 
             flex-grow: 1; 
@@ -84,14 +91,13 @@
             justify-content: center;
             text-decoration: none; 
             color: var(--text); 
-            font-size: 1.2rem; 
-            font-weight: bold;
-            padding: 20px;
+            font-size: 1.1rem; 
+            padding: 15px;
             text-align: center;
         }
         .yt-link:hover { background: var(--text); color: var(--bg); }
 
-        /* CONTENT AREA - CLEAN */
+        /* CONTENT AREA */
         .about-content { 
             font-size: 1.1rem; 
             line-height: 1.8; 
@@ -112,10 +118,10 @@
 
         <div class="yt-box">
             <div class="yt-img-placeholder">
-                image
+                <img src="images/Channel dp.jpg" alt="Gokicreation DP"> 
             </div>
-            <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="yt-link">
-                my yt channel link
+            <a href="https://www.youtube.com/@gokicreation071" target="_blank" class="yt-link">
+                Gokicreation on YouTube
             </a>
         </div>
 
