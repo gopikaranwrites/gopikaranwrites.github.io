@@ -78,7 +78,7 @@
             <button id="lang-ta" class="btn lang-btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
             <button id="lang-hi" class="btn lang-btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
         </div>
-        <a href="about.html" class="btn">ABOUT</a>
+        <a href="about.html" class="btn"> ABOUT ME </a>
     </div>
 </header>
 
@@ -89,7 +89,8 @@
 <main class="article-grid" id="grid"></main>
 
 <script>
-    let currentLang = localStorage.getItem('prefLang') || 'en';
+    // CHANGED: Set default to 'ta' (Tamil) if no preference is saved
+    let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
     // THEME LOGIC
@@ -134,9 +135,9 @@
         grid.innerHTML = '';
         
         const uiText = {
-            en: { name: "gopikaran writes", desc: "A permanent space for my thoughts and paintings." },
-            ta: { name: "கோபிகரன் எழுதுகிறார்", desc: "எனது எண்ணங்கள் மற்றும் ஓவியங்களுக்கான நிரந்தர இடம்." },
-            hi: { name: "गोपीकरण लिखते हैं", desc: "मेरे विचारों और चित्रों के लिए एक स्थायी स्थान।" }
+            en: { name: "gopikaran writes", desc: "Here, you won’t find answers.Instead, questions overflow.But those very questions will lead you to a  Place of Wisdom." },
+            ta: { name: "கோபிகரன் எழுதுகிறார்", desc: "இங்கு பதில்கள் கிடைக்காது;அதற்கு பதிலாக கேள்விகளே மிஞ்சும்.ஆனால் அந்தக் கேள்விகள்தான்உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
+            hi: { name: "गोपीकरण लिखते हैं", desc: "यहाँ आपको उत्तर नहीं मिलेंगे;इसके बजाय प्रश्न ही अधिक होंगे। लेकिन वही प्रश्न आपको ज्ञान के स्थान की ओर ले जाएँगे।" }
         };
         
         document.getElementById('siteName').innerText = uiText[currentLang].name;
