@@ -13,46 +13,94 @@
         
         .container { max-width: 800px; margin: 0 auto; }
         
-        /* BACK BUTTON */
-        .back-btn { display: inline-block; border: 2px solid var(--border); padding: 5px 15px; text-decoration: none; color: var(--text); font-weight: bold; margin-bottom: 30px; text-transform: uppercase; font-size: 12px; }
+        /* ROUNDED BACK BUTTON (From Sketch) */
+        .back-btn { 
+            display: inline-block; 
+            border: 2px solid var(--border); 
+            padding: 5px 25px; 
+            text-decoration: none; 
+            color: var(--text); 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            text-transform: lowercase; 
+            font-size: 16px; 
+            border-radius: 50px; /* Makes it pill-shaped like the sketch */
+        }
         .back-btn:hover { background: var(--text); color: var(--bg); }
 
-        /* ABOUT HEADER */
-        .profile-section { border: 3px solid var(--border); padding: 40px; text-align: center; margin-bottom: 40px; }
-        .profile-section h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: -2px; }
-        .profile-section p { font-style: italic; margin-top: 10px; opacity: 0.8; }
+        /* PROFILE SECTION (From Sketch) */
+        .profile-section { 
+            border: 3px solid var(--border); 
+            padding: 30px 20px; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            border-radius: 20px; /* Rounded corners like sketch */
+        }
+        .profile-section h1 { margin: 0; font-size: 2.8rem; text-transform: uppercase; }
+        .skills-tagline { 
+            font-size: 0.9rem; 
+            margin: 15px 0; 
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        .motto { font-size: 1.5rem; margin-top: 10px; }
+
+        /* YOUTUBE LINK BOX (From Sketch) */
+        .yt-box { 
+            border: 3px solid var(--border); 
+            display: flex; 
+            align-items: center; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            margin-bottom: 30px;
+        }
+        .yt-img-placeholder { 
+            border-right: 3px solid var(--border); 
+            padding: 15px 30px; 
+            font-weight: bold;
+            transform: rotate(-15deg); /* Slanted "image" text like sketch */
+        }
+        .yt-link { 
+            flex-grow: 1; 
+            text-align: center; 
+            text-decoration: none; 
+            color: var(--text); 
+            font-size: 1.4rem; 
+            font-weight: bold;
+        }
 
         /* CONTENT AREA */
-        .about-content { font-size: 1.2rem; line-height: 1.8; }
-        .about-content b { background: var(--text); color: var(--bg); padding: 0 4px; }
-
-        /* MINIMAL DIVIDER */
-        .divider { height: 3px; background: var(--border); margin: 40px 0; width: 50px; }
+        .about-content { font-size: 1.2rem; line-height: 1.6; }
+        .line-decoration { margin-top: 20px; border-top: 2px solid var(--border); width: 100%; opacity: 0.5; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <a href="index.html" class="back-btn">← BACK TO FEED</a>
+        <a href="index.html" class="back-btn">back</a>
 
         <div class="profile-section">
-            <h1>Gopikaran</h1>
-            <p>Painter & Writer</p>
+            <h1>GOPIKARAN R</h1>
+            <p class="skills-tagline"> Writer | Painter | Poet | Singer | Actor | Leader | Learner | Developer | Editor</p>
+            <p class="motto">Jack of all trades, master of none – but curious about everything</p>
+        </div>
+
+        <div class="yt-box">
+            <div class="yt-img-placeholder">image</div>
+            <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="yt-link">my yt channel link</a>
         </div>
 
         <div class="about-content">
-            <p>Welcome to my digital space. I created this website to host my <b>paintings</b> and <b>thoughts</b> in a way that feels permanent, away from the noise of social media.</p>
+            <p>Welcome, reader.</p>
+            <p>This is where I host my creative experiments and permanent thoughts.</p>
             
-            <div class="divider"></div>
-            
-            <p>Everything you see here—from the code to the canvas—is a part of my creative journey. I believe in <b>minimalism</b>, black-and-white aesthetics, and the power of a single line.</p>
-            
-            <p>Thank you for visiting.</p>
+            <div class="line-decoration"></div>
+            <div class="line-decoration" style="width: 90%; margin-left: auto;"></div>
+            <div class="line-decoration" style="width: 95%;"></div>
         </div>
     </div>
 
     <script>
-        // THIS IS THE FIX: It checks the theme when the page opens
         function applyTheme() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
@@ -61,11 +109,8 @@
                 document.body.classList.remove('dark-mode');
             }
         }
-
-        // Run immediately
         applyTheme();
 
-        // Optional: Listen for storage changes (if user changes theme in another tab)
         window.addEventListener('storage', (e) => {
             if (e.key === 'theme') applyTheme();
         });
