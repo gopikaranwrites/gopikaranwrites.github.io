@@ -21,56 +21,54 @@
         .mode-btn { background: #000000 !important; color: #ffffff !important; border: 2px solid #000000 !important; }
         body.dark-mode .mode-btn { background: #ffffff !important; color: #000000 !important; border: 2px solid #ffffff !important; }
 
-        .btn.active { background: var(--text); color: var(--bg); }
+        .btn.active, .side-btn.active { background: var(--text) !important; color: var(--bg) !important; }
         
-        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 180px; }
+        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 150px; }
 
-        /* NEW HERO LAYOUT: Banner Shifted Left + 3 Side Boxes */
+        /* HERO AREA: REVISED LAYOUT */
         .hero-container { 
             max-width: 1200px; 
             margin: 30px auto; 
             padding: 0 20px;
             display: flex;
+            flex-direction: column; /* Stacked for mobile-first/better flow */
             gap: 15px;
-            align-items: stretch;
         }
 
         .description-box { 
-            flex: 3; /* Shorter width to shift left */
             border: 3px solid var(--border); 
-            padding: 30px; 
+            padding: 25px; 
             font-style: italic; 
-            font-weight: 900; /* POINT 3: BOLD FONT */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-weight: bold; /* Reduced from 900 to standard bold */
             text-align: center;
             font-size: 1.1rem;
             line-height: 1.4;
         }
 
+        /* Side-by-side buttons below banner */
         .hero-side-nav {
-            flex: 1; /* Space for the 3 boxes */
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* Side by side */
             gap: 10px;
+            justify-content: center;
         }
 
         .side-btn {
             flex: 1;
-            background: #000000;
-            color: #ffffff;
-            border: none;
+            max-width: 150px; /* Reduced width */
+            border: 2px solid var(--border);
+            background: none;
+            color: var(--text);
             cursor: pointer;
             font-weight: bold;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 11px;
+            padding: 8px 5px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: 0.2s;
         }
-        body.dark-mode .side-btn { background: #ffffff; color: #000000; }
         .side-btn:hover { opacity: 0.8; }
 
         /* GRID SYSTEM */
@@ -92,7 +90,7 @@
 <header>
     <div class="nav-controls">
         <button id="modeBtn" class="btn mode-btn" onclick="toggleTheme()">MODE</button>
-        <input type="text" id="search" class="search-bar" placeholder="SEARCH TITLE, BODY, TAGS..." onkeyup="deepSearch()">
+        <input type="text" id="search" class="search-bar" placeholder="SEARCH..." onkeyup="deepSearch()">
     </div>
     
     <div class="logo" id="siteName">gopikaran writes</div>
@@ -111,9 +109,9 @@
     <div class="description-box" id="siteDesc">Loading space...</div>
     
     <div class="hero-side-nav">
-        <button class="side-btn" onclick="quickFilter('#social')">social view</button>
-        <button class="side-btn" onclick="quickFilter('#review')">review</button>
-        <button class="side-btn" onclick="quickFilter('#random')">random</button>
+        <button class="side-btn filter-opt" data-tag="#social" onclick="quickFilter('#social', this)">social</button>
+        <button class="side-btn filter-opt" data-tag="#review" onclick="quickFilter('#review', this)">review</button>
+        <button class="side-btn filter-opt" data-tag="#random" onclick="quickFilter('#random', this)">random</button>
     </div>
 </section>
 
@@ -165,12 +163,11 @@
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(`lang-${currentLang}`).classList.add('active');
 
-        allArticles.forEach((art, index) => {
+        allArticles.forEach((art) => {
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
             
-            // POINT 2: Store Title, Body, and Tags for Deep Search
             const searchData = (art[currentLang].title + " " + art[currentLang].body + " " + art.tags).toLowerCase();
             card.setAttribute('data-searchable', searchData);
             
@@ -182,6 +179,8 @@
             `;
             grid.appendChild(card);
         });
+        // Maintain search filter if active
+        deepSearch();
     }
 
     function changeLang(lang) {
@@ -190,19 +189,33 @@
         renderUI();
     }
 
-    // POINT 2: Deep Search Function
     function deepSearch() {
         const query = document.getElementById('search').value.toLowerCase().trim();
         document.querySelectorAll('.article-item').forEach(item => {
             const content = item.getAttribute('data-searchable');
             item.classList.toggle('hidden', !content.includes(query));
         });
+
+        // Sync button active states with search bar content
+        document.querySelectorAll('.filter-opt').forEach(btn => {
+            if (query !== "" && btn.getAttribute('data-tag') === query) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
     }
 
-    // POINT 1: Function for the 3 Side Boxes
-    function quickFilter(tag) {
+    function quickFilter(tag, el) {
         const searchInput = document.getElementById('search');
-        searchInput.value = tag;
+        
+        // Toggle logic: if already active, clear search
+        if (searchInput.value === tag) {
+            searchInput.value = "";
+        } else {
+            searchInput.value = tag;
+        }
+        
         deepSearch();
     }
 
