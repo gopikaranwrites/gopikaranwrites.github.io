@@ -19,16 +19,15 @@
         .share-icon { position: absolute; bottom: 10px; right: 10px; cursor: pointer; font-size: 18px; opacity: 0.6; transition: 0.3s; }
         .share-icon:hover { opacity: 1; transform: scale(1.1); }
 
-        /* IMAGE FIX: Responsive and contained */
+        /* IMAGE FIX: Aspect ratio for Desktop (Green Box Style) */
         .image-wrapper { text-align: center; margin: 40px 0; display: none; }
         .article-img { 
-            max-width: 90%; 
-            max-height: 550px; /* Prevents desktop images from being too tall */
-            width: auto;
-            height: auto;
+            width: 100%;
+            max-width: 700px; /* Aligned with your green box width */
+            height: 300px;    /* Aligned with your green box height */
             border: 3px solid var(--border); 
             display: inline-block;
-            object-fit: contain; 
+            object-fit: cover; /* Keeps the "movie" cinematic look without distortion */
         }
 
         .content-body { font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; margin-bottom: 20px; }
@@ -36,21 +35,27 @@
         /* FEEDBACK SECTION */
         .feedback-section { border-top: 3px solid var(--border); margin-top: 50px; padding-top: 30px; }
         .feedback-box { width: 100%; height: 100px; padding: 15px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; resize: none; box-sizing: border-box; outline: none; }
-        .submit-btn { margin-top: 10px; background: var(--text); color: var(--bg); border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .submit-btn { margin-top: 10px; background: var(--text); color: var(--bg); border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 100%; }
         
+        /* Message Box Styling */
         #feedback-message { 
             display: none; 
             margin-top: 15px; 
+            padding: 15px;
+            border: 2px solid var(--border);
+            background: var(--accent);
+            text-align: center;
             font-size: 0.9rem; 
-            font-style: italic; 
+            font-weight: bold;
             color: var(--text);
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Mobile View: Excellent as requested, height becomes auto */
         @media (max-width: 600px) {
-            .article-img { max-width: 100%; max-height: none; }
+            .article-img { width: 100%; height: auto; max-height: none; }
             .title-box { font-size: 1.4rem; }
         }
     </style>
@@ -78,7 +83,7 @@
             <div class="feedback-section">
                 <textarea id="feedbackText" class="feedback-box" placeholder="Write your thoughts anonymously..."></textarea>
                 <button class="submit-btn" onclick="sendFeedback()">Submit Feedback</button>
-                <div id="feedback-message">Message received. Thank you for reading.</div>
+                <div id="feedback-message">MESSAGE RECEIVED. THANK YOU FOR READING.</div>
             </div>
         </div>
     </div>
@@ -123,6 +128,7 @@
             const url = 'https://script.google.com/macros/s/AKfycbwW7-CrfC1irHkYLRr_UQ_QQutZf8Q70CepgPMGiW4Vt7MgbW3ChcB8HG_Gwl3LZHsw/exec';
 
             try {
+                // Instantly show the "sending" state if you want, or just wait for success
                 await fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -132,10 +138,19 @@
                         timestamp: new Date().toLocaleString()
                     })
                 });
+                
+                // Success UI
                 fbBox.value = "";
                 msg.style.display = "block";
-                setTimeout(() => { msg.style.display = "none"; }, 4000);
-            } catch (e) { alert("Error sending."); }
+                
+                // Message stays for 5 seconds (5000ms)
+                setTimeout(() => { 
+                    msg.style.display = "none"; 
+                }, 5000);
+
+            } catch (e) { 
+                alert("Error sending."); 
+            }
         }
 
         function shareArticle() {
