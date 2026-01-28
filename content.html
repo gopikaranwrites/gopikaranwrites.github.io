@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reading - gopikaran writes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg: #fff; --text: #000; --border: #000; }
-        body.dark-mode { --bg: #000; --text: #fff; --border: #fff; }
+        :root { --bg: #fff; --text: #000; --border: #000; --accent: #f3f3f3; }
+        body.dark-mode { --bg: #000; --text: #fff; --border: #fff; --accent: #222; }
         
         body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; font-family: 'Courier New', Courier, monospace; transition: 0.3s; }
         .container { max-width: 800px; margin: 0 auto; }
@@ -14,33 +15,28 @@
         .back-btn { display: inline-block; border: 2px solid var(--border); padding: 5px 15px; text-decoration: none; color: var(--text); font-weight: bold; margin-bottom: 20px; text-transform: uppercase; font-size: 12px; }
         .back-btn:hover { background: var(--text); color: var(--bg); }
 
-        .title-box { border: 3px solid var(--border); padding: 30px; text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; }
+        .title-box { border: 3px solid var(--border); padding: 30px; text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; position: relative; }
 
-        /* UPDATED IMAGE STYLE */
+        /* Share Button Style */
+        .share-icon { position: absolute; bottom: 10px; right: 10px; cursor: pointer; font-size: 18px; color: var(--text); opacity: 0.7; }
+        .share-icon:hover { opacity: 1; }
+
+        /* Image Style */
         .image-wrapper { text-align: center; margin: 40px 0; }
-        .article-img { 
-            /* Increased width slightly for desktop */
-            max-width: 75%; 
-            /* Added a subtle height boost */
-            min-height: 280px; 
-            width: auto;
-            height: auto;
-            border: 3px solid var(--border); 
-            display: inline-block;
-            transition: 0.3s;
-            object-fit: cover; 
-        }
-
-        /* Responsive for mobile (Remains unchanged as requested) */
-        @media (max-width: 600px) {
-            .article-img { 
-                max-width: 100%; 
-                min-height: auto; /* Reset height for mobile screens */
-            }
-            .title-box { font-size: 1.4rem; }
-        }
+        .article-img { max-width: 85%; height: auto; border: 3px solid var(--border); display: inline-block; }
 
         .content-body { font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; margin-bottom: 20px; }
+
+        /* Feedback Box Style */
+        .feedback-section { border-top: 3px solid var(--border); margin-top: 50px; padding-top: 30px; }
+        .feedback-box { width: 100%; height: 100px; padding: 15px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; resize: none; box-sizing: border-box; }
+        .submit-btn { margin-top: 10px; background: var(--text); color: var(--bg); border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .submit-btn:hover { opacity: 0.8; }
+
+        @media (max-width: 600px) {
+            .article-img { max-width: 100%; }
+            .title-box { font-size: 1.4rem; }
+        }
         .loading { text-align: center; font-style: italic; margin-top: 50px; }
     </style>
 </head>
@@ -48,26 +44,32 @@
 
     <div class="container">
         <a href="index.html" class="back-btn">← BACK</a>
-        
         <div id="loader" class="loading">Loading article...</div>
 
         <div id="article-content" style="display: none;">
-            <div class="title-box" id="postTitle"></div>
+            <div class="title-box">
+                <span id="postTitle"></span>
+                <i class="fa-solid fa-share-nodes share-icon" onclick="shareArticle()" title="Share this post"></i>
+            </div>
             
             <div class="content-body" id="postBodyTop"></div>
             
-            <div class="image-wrapper">
+            <div class="image-wrapper" id="imageArea">
                 <img src="" alt="Article Image" class="article-img" id="postImage">
             </div>
             
             <div class="content-body" id="postBodyBottom"></div>
+
+            <div class="feedback-section">
+                <h3>LEAVE FEEDBACK</h3>
+                <textarea id="feedbackText" class="feedback-box" placeholder="What are your thoughts?"></textarea>
+                <button class="submit-btn" onclick="sendFeedback()">Submit to Sheet</button>
+            </div>
         </div>
     </div>
 
     <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
 
         const params = new URLSearchParams(window.location.search);
         const fileName = params.get('file');
@@ -76,30 +78,65 @@
         async function fetchArticle() {
             try {
                 const response = await fetch(`data/${fileName}`);
-                if (!response.ok) throw new Error("File not found");
                 const data = await response.json();
                 const content = data[lang];
 
-                document.getElementById('postTitle').innerHTML = content.title;
+                document.getElementById('postTitle').innerText = content.title;
                 document.getElementById('postImage').src = data.image;
 
+                // Handle Image Placement logic
                 const fullText = content.body;
                 if (fullText.includes("[IMAGE]")) {
                     const parts = fullText.split("[IMAGE]");
                     document.getElementById('postBodyTop').innerHTML = parts[0];
                     document.getElementById('postBodyBottom').innerHTML = parts[1] || "";
+                    document.getElementById('imageArea').style.display = "block";
                 } else {
                     document.getElementById('postBodyTop').innerHTML = fullText;
-                    document.getElementById('postBodyBottom').style.display = "none";
+                    document.getElementById('imageArea').style.display = "none";
                 }
 
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('article-content').style.display = 'block';
-                document.title = content.title + " - gopikaran writes";
-
             } catch (error) {
-                document.getElementById('loader').innerText = "Error: Article file missing or broken.";
-                console.error(error);
+                document.getElementById('loader').innerText = "Error loading content.";
+            }
+        }
+
+        async function sendFeedback() {
+            const feedback = document.getElementById('feedbackText').value;
+            const sheetTabName = fileName.split('.')[0]; // Uses 'art1' as tab name
+            
+            if (!feedback.trim()) return alert("Write something first!");
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwW7-CrfC1irHkYLRr_UQ_QQutZf8Q70CepgPMGiW4Vt7MgbW3ChcB8HG_Gwl3LZHsw/exec';
+
+            try {
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        tabName: sheetTabName,
+                        feedback: feedback,
+                        timestamp: new Date().toLocaleString()
+                    })
+                });
+                alert("Feedback saved in " + sheetTabName + " tab!");
+                document.getElementById('feedbackText').value = "";
+            } catch (e) {
+                alert("Submission failed.");
+            }
+        }
+
+        function shareArticle() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('postTitle').innerText,
+                    url: window.location.href
+                });
+            } else {
+                alert("Link copied to clipboard: " + window.location.href);
+                navigator.clipboard.writeText(window.location.href);
             }
         }
 
