@@ -106,7 +106,7 @@
                 <div id="feedback-message">MESSAGE RECEIVED. THANK YOU FOR READING.</div>
                 
                 <textarea id="feedbackText" class="feedback-box" placeholder="Write your thoughts anonymously..."></textarea>
-                <button id="submitBtn" class="submit-btn" onclick="sendFeedback()">Submit Feedback</button>
+                <button id="submitBtn" class="submit-btn" onclick="sendFeedback()">send</button>
             </div>
         </div>
     </div>
@@ -172,13 +172,13 @@
                 setTimeout(() => { 
                     msg.style.display = "none"; 
                     btn.disabled = false;
-                    btn.innerText = "SUBMIT FEEDBACK";
+                    btn.innerText = "sent";
                 }, 6000);
 
             } catch (e) { 
                 alert("Error sending feedback."); 
                 btn.disabled = false;
-                btn.innerText = "SUBMIT FEEDBACK";
+                btn.innerText = "sent";
             }
         }
 
