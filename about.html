@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - gopikaran writes</title>
+    <title>About - Gopikaran R</title>
+    <meta name="description" content="Official about page of Gopikaran R. Writer, Thinker, Developer, and Creative Explorer.">
+    
     <style>
         :root { --bg: #ffffff; --text: #000000; --border: #000000; }
         body.dark-mode { --bg: #000000; --text: #ffffff; --border: #ffffff; }
@@ -13,7 +15,6 @@
         
         .container { max-width: 800px; margin: 0 auto; }
         
-        /* SHARP SQUARE BACK BUTTON */
         .back-btn { 
             display: inline-block; 
             border: 2px solid var(--border); 
@@ -27,7 +28,6 @@
         }
         .back-btn:hover { background: var(--text); color: var(--bg); }
 
-        /* PROFILE SECTION - REMAINS BOLD */
         .profile-section { 
             border: 3px solid var(--border); 
             padding: 40px 20px; 
@@ -52,15 +52,14 @@
             line-height: 1.6;
         }
         .motto { 
-            font-size: 1.5rem; 
-            margin: 0;
-            font-family: "Fira Sans", serif;
-            font-weight: bold;  
+            font-size: 1.3rem; 
+            margin: 10px 0 0 0;
+            font-weight: bold; 
+            font-style: italic;
         }
 
-        /* YOUTUBE BOX - THIN 1PX BORDER */
         .yt-box { 
-            border: 1px solid var(--border); /* Changed from 3px to 1px */
+            border: 1px solid var(--border); 
             display: flex; 
             align-items: stretch; 
             margin-bottom: 30px;
@@ -68,21 +67,14 @@
             overflow: hidden;
         }
         .yt-img-placeholder { 
-            border-right: 1px solid var(--border); /* Matched to 1px */
-            width: 100px; 
-            min-height: 80px;
+            border-right: 1px solid var(--border); 
+            width: 80px; 
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0,0,0,0.03);
         }
-        .yt-img-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        body.dark-mode .yt-img-placeholder { background: rgba(255,255,255,0.05); }
+        .yt-img-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .yt-link { 
             flex-grow: 1; 
@@ -91,18 +83,22 @@
             justify-content: center;
             text-decoration: none; 
             color: var(--text); 
-            font-size: 1.1rem; 
-            padding: 15px;
+            font-size: 1rem; 
+            padding: 10px;
             text-align: center;
+            font-weight: bold;
         }
         .yt-link:hover { background: var(--text); color: var(--bg); }
 
-        /* CONTENT AREA */
         .about-content { 
             font-size: 1.1rem; 
             line-height: 1.8; 
             text-align: left;
+            border-top: 1px solid var(--border);
+            padding-top: 30px;
         }
+        .about-content p { margin-bottom: 20px; }
+        .highlight { background: var(--text); color: var(--bg); padding: 0 4px; }
     </style>
 </head>
 <body>
@@ -112,13 +108,13 @@
 
         <div class="profile-section">
             <h1>GOPIKARAN R</h1>
-            <p class="skills-tagline">Writer | Painter | Poet | Singer | Actor | Leader | Reviewer | Developer | Editor</p>
-            <p class="motto">"Jack of all trades, master of none – but curious about everything"</p>
+            <p class="skills-tagline">Writer | Thinker | Developer | Reviewer | Creative Explorer</p>
+            <p class="motto">"Jack of all trades, master of none — but deeply curious about everything."</p>
         </div>
 
         <div class="yt-box">
             <div class="yt-img-placeholder">
-                <img src="images/Channel dp.jpg" alt="Gokicreation DP"> 
+                <img src="images/Channel dp.jpg" onerror="this.src='https://via.placeholder.com/80x80?text=YT'"> 
             </div>
             <a href="https://www.youtube.com/@gokicreation071" target="_blank" class="yt-link">
                 Gokicreation on YouTube
@@ -126,8 +122,17 @@
         </div>
 
         <div class="about-content">
-            <p>Welcome, reader.</p>
-            <p>This is where I host my creative experiments and permanent thoughts. This space is a digital archive of my journey through art and words.</p>
+            <p>I don’t fit neatly into one box — and I’ve stopped trying to.</p>
+            
+            <p>I write when thoughts demand words, build when ideas need form, and observe when the world offers lessons.</p>
+            
+            <p>This space is not a portfolio of perfection. It’s a record of curiosity — thoughts shaped by <span class="highlight">society, cinema, politics, people</span>, and personal contradictions.</p>
+            
+            <p>Some days you’ll find social questions. Some days reviews, fragments, or unfinished thoughts. All days, honesty.</p>
+            
+            <p>I believe thinking deeply matters more than speaking loudly. And curiosity, even without mastery, is still a kind of strength.</p>
+            
+            <p>Welcome. Read slowly.</p>
         </div>
     </div>
 
