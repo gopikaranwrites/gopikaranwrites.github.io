@@ -11,7 +11,7 @@
         body.dark-mode { --bg: #000000; --text: #ffffff; --border: #ffffff; }
         
         * { box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; font-family: 'Courier New', Courier, monospace; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding: 15px; font-family: 'Courier New', Courier, monospace; transition: 0.3s; }
         
         .container { max-width: 800px; margin: 0 auto; }
         
@@ -36,39 +36,46 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
+
+        /* FIXED: Fluid Typography for the Name */
         .profile-section h1 { 
             margin: 0; 
-            font-size: 2.5rem; 
+            font-size: clamp(1.6rem, 7vw, 2.5rem); 
             text-transform: uppercase; 
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            line-height: 1.1;
+            width: 100%;
         }
+
         .skills-tagline { 
             font-size: 0.85rem; 
             margin: 15px 0; 
             font-weight: bold;
             text-transform: uppercase;
-            line-height: 1.6;
+            line-height: 1.5;
         }
+
         .motto { 
-            font-size: 1.3rem; 
+            font-size: clamp(1rem, 4vw, 1.3rem);
             margin: 10px 0 0 0;
             font-weight: bold; 
             font-style: italic;
+            max-width: 95%;
         }
 
         .yt-box { 
             border: 1px solid var(--border); 
             display: flex; 
-            align-items: stretch; 
             margin-bottom: 30px;
             width: 100%;
             overflow: hidden;
         }
+
         .yt-img-placeholder { 
             border-right: 1px solid var(--border); 
-            width: 80px; 
+            width: 70px; 
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -83,22 +90,28 @@
             justify-content: center;
             text-decoration: none; 
             color: var(--text); 
-            font-size: 1rem; 
-            padding: 10px;
+            font-size: 0.9rem; 
+            padding: 12px;
             text-align: center;
             font-weight: bold;
         }
         .yt-link:hover { background: var(--text); color: var(--bg); }
 
         .about-content { 
-            font-size: 1.1rem; 
-            line-height: 1.8; 
-            text-align: left;
+            font-size: 1.05rem; 
+            line-height: 1.7; 
             border-top: 1px solid var(--border);
-            padding-top: 30px;
+            padding-top: 25px;
         }
         .about-content p { margin-bottom: 20px; }
         .highlight { background: var(--text); color: var(--bg); padding: 0 4px; }
+
+        /* MOBILE OVERRIDES */
+        @media (max-width: 480px) {
+            .profile-section { padding: 30px 10px; }
+            .skills-tagline { font-size: 0.75rem; }
+            .yt-link { font-size: 0.8rem; padding: 8px; }
+        }
     </style>
 </head>
 <body>
@@ -108,7 +121,7 @@
 
         <div class="profile-section">
             <h1>GOPIKARAN R</h1>
-            <p class="skills-tagline">Writer | Thinker | Developer | Reviewer | Creative Explorer</p>
+            <p class="skills-tagline">Writer | Editor | Developer | Reviewer | Creative Explorer</p>
             <p class="motto">"Jack of all trades, master of none — but deeply curious about everything."</p>
         </div>
 
@@ -117,7 +130,7 @@
                 <img src="images/Channel dp.jpg" onerror="this.src='https://via.placeholder.com/80x80?text=YT'"> 
             </div>
             <a href="https://www.youtube.com/@gokicreation071" target="_blank" class="yt-link">
-                Gokicreation on YouTube
+                Editor :- Gokicreation on YouTube
             </a>
         </div>
 
@@ -129,8 +142,6 @@
             <p>This space is not a portfolio of perfection. It’s a record of curiosity — thoughts shaped by <span class="highlight">society, cinema, politics, people</span>, and personal contradictions.</p>
             
             <p>Some days you’ll find social questions. Some days reviews, fragments, or unfinished thoughts. All days, honesty.</p>
-            
-            <p>I believe thinking deeply matters more than speaking loudly. And curiosity, even without mastery, is still a kind of strength.</p>
             
             <p>Welcome. Read slowly.</p>
         </div>
