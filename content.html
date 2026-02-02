@@ -6,8 +6,8 @@
     <title>Reading - gopikaran writes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg: #fff; --text: #000; --border: #000; --accent: #f9f9f9; --watermark: rgba(0,0,0,0.05); }
-        body.dark-mode { --bg: #000; --text: #fff; --border: #fff; --accent: #111; --watermark: rgba(255,255,255,0.05); }
+        :root { --bg: #fff; --text: #000; --border: #000; --accent: #f9f9f9; }
+        body.dark-mode { --bg: #000; --text: #fff; --border: #fff; --accent: #111; }
         
         /* PROTECTION: Prevents text highlighting */
         body { 
@@ -26,26 +26,32 @@
 
         .container { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
         
-        /* WATERMARK STYLING */
+        /* GHOST WATERMARK: Floating on top but barely visible */
         .watermark-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: none; 
-            z-index: 1;
+            pointer-events: none; /* Crucial: allows clicking buttons through it */
+            z-index: 9999; /* Higher than everything else */
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             align-content: space-around;
-            transform: rotate(-20deg) scale(1.2);
+            transform: rotate(-25deg) scale(1.3);
+            opacity: 0.03; /* Super faint - eyes will ignore while reading */
+            mix-blend-mode: multiply; /* Blends text into background */
+        }
+        body.dark-mode .watermark-overlay {
+            mix-blend-mode: screen; /* Correct blending for dark backgrounds */
+            opacity: 0.04;
         }
         .watermark-text {
-            color: var(--watermark);
-            font-size: 18px;
+            color: var(--text);
+            font-size: 20px;
             font-weight: bold;
-            margin: 40px;
+            margin: 50px;
             white-space: nowrap;
             text-transform: uppercase;
         }
@@ -65,7 +71,7 @@
             border: 3px solid var(--border); 
             display: inline-block;
             object-fit: cover; 
-            pointer-events: none; /* Prevents dragging image */
+            pointer-events: none;
         }
 
         .content-body { font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; margin-bottom: 20px; position: relative; }
@@ -86,7 +92,6 @@
             order: 1; 
         }
 
-        /* Allow typing in feedback box */
         .feedback-box { 
             width: 100%; height: 100px; padding: 15px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; resize: none; box-sizing: border-box; outline: none; order: 2; 
             -webkit-user-select: text;
@@ -103,13 +108,15 @@
         @media (max-width: 600px) {
             .article-img { width: 100%; height: auto; max-height: none; }
             .title-box { font-size: 1.4rem; }
-            .watermark-text { font-size: 12px; margin: 20px; }
+            .watermark-text { font-size: 14px; margin: 30px; }
         }
     </style>
 </head>
-<body oncontextmenu="return false;"> <div class="watermark-overlay">
+<body oncontextmenu="return false;"> 
+
+    <div class="watermark-overlay">
         <script>
-            for(let i=0; i<40; i++) {
+            for(let i=0; i<60; i++) {
                 document.write('<span class="watermark-text">GOPIKARAN WRITES</span>');
             }
         </script>
@@ -142,7 +149,7 @@
     </div>
 
     <script>
-        // PROTECTION: Block Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+P
+        // PROTECTION: Block keyboard theft shortcuts
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'a')) {
                 e.preventDefault();
@@ -196,7 +203,7 @@
                     btn.innerText = "send";
                 }, 6000);
             } catch (e) { 
-                alert("Error sending feedback."); 
+                alert("Error."); 
                 btn.disabled = false;
                 btn.innerText = "send";
             }
