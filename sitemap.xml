@@ -1,1 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://gopikaranwrites.github.io/</loc><priority>1.0</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/about.html</loc><priority>0.8</priority></url>
 
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art1.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art2.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art3.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art4.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art5.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art6.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art7.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art8.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art9.json&amp;lang=ta</loc><priority>0.7</priority></url>
+  <url><loc>https://gopikaranwrites.github.io/content.html?file=art10.json&amp;lang=ta</loc><priority>0.7</priority></url>
+
+  </urlset>
