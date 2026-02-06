@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Gopikaran R | Official Writing Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="images/gk%20black.png">
+    <link rel="apple-touch-icon" href="images/gk%20black.png">
+
     <meta name="description" content="Explore the creative writing and insights of Gopikaran R. Articles available in English, Tamil (தமிழ்), and Hindi (हिन्दी).">
-    <meta name="keywords" content="Gopikaran R, Gopikaran R writes, Tamil Writer, Ramco Institute of Technology, creative writing portfolio">
+    <meta name="keywords" content="Gopikaran R, Gopikaran R writes, Tamil Writer, creative writing portfolio">
     <meta name="author" content="Gopikaran R">
 
     <script type="application/ld+json">
@@ -14,12 +18,8 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Gopikaran R",
-      "url": "https://gopikaran.github.io/",
-      "jobTitle": "Writer",
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Ramco Institute of Technology"
-      },
+      "url": "https://gopikaranwrites.github.io/",
+      "jobTitle": "Writer & Developer",
       "sameAs": [
         "https://www.linkedin.com/in/gopikaran-r-266066275"
       ]
@@ -31,56 +31,61 @@
         body.dark-mode { --bg: #000000; --text: #ffffff; --border: #ffffff; }
         
         * { box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 3px solid var(--border); flex-wrap: wrap; gap: 10px; }
-        .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; letter-spacing: -1px; }
+        /* HEADER - FIXED FOR MOBILE */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px; 
+            border-bottom: 3px solid var(--border); 
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+
+        .logo { 
+            font-size: clamp(1.2rem, 5vw, 1.8rem); 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: -1px;
+            flex-grow: 1;
+            text-align: center;
+        }
         
-        .nav-controls { display: flex; gap: 10px; align-items: center; }
-        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 12px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 12px; transition: 0.2s; }
+        .nav-controls { display: flex; gap: 8px; align-items: center; justify-content: center; }
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; transition: 0.2s; white-space: nowrap; }
+        .btn:hover { background: var(--text); color: var(--bg); }
         
         .mode-btn { background: #000000 !important; color: #ffffff !important; border: 2px solid #000000 !important; }
         body.dark-mode .mode-btn { background: #ffffff !important; color: #000000 !important; border: 2px solid #ffffff !important; }
 
-        .btn.active, .side-btn.active { background: var(--text) !important; color: var(--bg) !important; }
+        .btn.active { background: var(--text) !important; color: var(--bg) !important; }
         
-        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 150px; }
+        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: clamp(100px, 30vw, 150px); font-size: 12px; }
 
         /* HERO AREA */
-        .hero-container { 
-            max-width: 1200px; 
-            margin: 30px auto; 
-            padding: 0 20px;
-            display: flex;
-            flex-direction: column; 
-            gap: 15px;
-        }
+        .hero-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 15px; }
 
         .description-box { 
             border: 3px solid var(--border); 
-            padding: 25px; 
+            padding: 20px; 
             font-style: italic; 
             font-weight: bold; 
             text-align: center;
-            font-size: 1.1rem;
-            line-height: 1.4;
-            min-height: 120px; /* Prevents layout jump during typing */
+            font-size: clamp(0.95rem, 4vw, 1.1rem);
+            line-height: 1.5;
+            min-height: 140px; 
         }
 
-        /* Loading Animation Styles */
         @keyframes blink { 50% { opacity: 0; } }
-        .cursor { display: inline-block; width: 10px; background-color: var(--text); margin-left: 2px; animation: blink 0.8s infinite; }
+        .cursor { display: inline-block; width: 8px; background-color: var(--text); margin-left: 2px; animation: blink 0.8s infinite; }
 
-        .hero-side-nav {
-            display: flex;
-            flex-direction: row; 
-            gap: 10px;
-            justify-content: center;
-        }
+        .hero-side-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 
         .side-btn {
             flex: 1;
+            min-width: 100px;
             max-width: 150px; 
             border: 2px solid var(--border);
             background: none;
@@ -89,26 +94,31 @@
             font-weight: bold;
             text-transform: uppercase;
             font-size: 11px;
-            padding: 8px 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 10px 5px;
             transition: 0.2s;
         }
-        .side-btn:hover { opacity: 0.8; }
+        .side-btn.active { background: var(--text); color: var(--bg); }
 
         /* GRID SYSTEM */
-        .article-grid { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
+        .article-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
 
         /* CARDS */
-        .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform 0.2s; }
-        .card:hover { transform: scale(1.02); }
-        .card-img { height: 200px; border-bottom: 3px solid var(--border); overflow: hidden; background: #eee; }
+        .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.2s; height: 100%; }
+        .card:hover { transform: translateY(-5px); box-shadow: 5px 5px 0px var(--border); }
+        .card-img { aspect-ratio: 16/9; border-bottom: 3px solid var(--border); overflow: hidden; background: #eee; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-title { padding: 15px; font-weight: bold; font-size: 18px; line-height: 1.2; }
+        .card-title { padding: 15px; font-weight: bold; font-size: 1.1rem; line-height: 1.3; flex-grow: 1; }
         
         .hidden { display: none; }
+
+        /* MOBILE OVERRIDES */
+        @media (max-width: 480px) {
+            header { flex-direction: column; text-align: center; }
+            .nav-controls { width: 100%; justify-content: space-around; }
+            .logo { order: -1; width: 100%; margin-bottom: 5px; }
+        }
     </style>
 </head>
 <body>
@@ -119,15 +129,15 @@
         <input type="text" id="search" class="search-bar" placeholder="SEARCH..." onkeyup="deepSearch()">
     </div>
     
-    <div class="logo" id="siteName">Gopikaran R</div>
+    <div class="logo" id="siteName">GOPIKARAN R</div>
     
     <div class="nav-controls">
         <div style="border: 2px solid var(--border); display: flex;">
-            <button id="lang-en" class="btn lang-btn" style="border:none" onclick="changeLang('en')">EN</button>
-            <button id="lang-ta" class="btn lang-btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
-            <button id="lang-hi" class="btn lang-btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
+            <button id="lang-en" class="btn" style="border:none" onclick="changeLang('en')">EN</button>
+            <button id="lang-ta" class="btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
+            <button id="lang-hi" class="btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
         </div>
-        <a href="about.html" class="btn"> ABOUT ME </a>
+        <a href="about.html" class="btn">ABOUT</a>
     </div>
 </header>
 
@@ -154,10 +164,9 @@
         localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
 
-    // Typewriter effect function
     function typeEffect(elementId, text) {
         let i = 0;
-        const speed = 40; // typing speed in milliseconds
+        const speed = 35;
         const element = document.getElementById(elementId);
         element.innerHTML = "";
         
@@ -174,7 +183,6 @@
     }
 
     async function init() {
-        const grid = document.getElementById('grid');
         try {
             const listRes = await fetch('list.json');
             const fileList = await listRes.json();
@@ -196,32 +204,30 @@
         const grid = document.getElementById('grid');
         grid.innerHTML = '';
         
-        // Updated with your preferred stylized names
         const uiText = {
-            en: { name: "Karan 🌤️", desc: "Here, you won’t find answers. Instead, questions overflow. But those every questions will lead you to a Place of Wisdom." },
-            ta: { name: "கran 🌤️", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும். ஆனால் இந்தக் கேள்விகள் உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
-            hi: { name: "कran 🌤️", desc: "यहाँ आपको उत्तर नहीं मिलेंगे; इसके बजाय प्रश्न ही अधिक होंगे। लेकिन वही प्रश्न आपको ज्ञान के स्थान की ओर ले जाएँगे।" }
+            en: { name: "GOPIKARAN R 🌤️", desc: "I am a collector of contradictions. Logic for building, emotion for wandering—I’m just here to see as much as I can while the light is still good." },
+            ta: { name: "கோபிகரன் R 🌤️", desc: "முரண்பாடுகளின் தொகுப்பு நான். உருவாக்கத்திற்கு தர்க்கம், தேடலுக்கு உணர்வு—வெளிச்சம் இருக்கும் வரை அனைத்தையும் காண விழைகிறேன்." },
+            hi: { name: "गोपिकरण R 🌤️", desc: "मैं विरोधाभासों का संग्रह हूँ। निर्माण के लिए तर्क, भटकने के लिए भावना—मैं यहाँ तब तक सब कुछ देखने आया हूँ जब तक रोशनी अच्छी है।" }
         };
         
         document.getElementById('siteName').innerText = uiText[currentLang].name;
-        
-        // Trigger typewriter for description
         typeEffect('siteDesc', uiText[currentLang].desc);
 
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(`lang-${currentLang}`).classList.add('active');
+        document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+        const activeLangBtn = document.getElementById(`lang-${currentLang}`);
+        if(activeLangBtn) activeLangBtn.classList.add('active');
 
         allArticles.forEach((art) => {
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
             
-            const searchData = (art[currentLang].title + " " + art[currentLang].body + " " + art.tags).toLowerCase();
+            const searchData = (art[currentLang].title + " " + art.tags).toLowerCase();
             card.setAttribute('data-searchable', searchData);
             
             card.innerHTML = `
                 <div class="card-img">
-                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x250?text=IMAGE+MISSING'">
+                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x225?text=IMAGE+MISSING'">
                 </div>
                 <div class="card-title">${art[currentLang].title}</div>
             `;
@@ -244,21 +250,13 @@
         });
 
         document.querySelectorAll('.filter-opt').forEach(btn => {
-            if (query !== "" && btn.getAttribute('data-tag') === query) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            btn.classList.toggle('active', query !== "" && btn.getAttribute('data-tag') === query);
         });
     }
 
     function quickFilter(tag, el) {
         const searchInput = document.getElementById('search');
-        if (searchInput.value === tag) {
-            searchInput.value = "";
-        } else {
-            searchInput.value = tag;
-        }
+        searchInput.value = (searchInput.value === tag) ? "" : tag;
         deepSearch();
     }
 
