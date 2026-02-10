@@ -20,107 +20,71 @@
         * { box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER - FIXED FOR MOBILE ALIGNMENT */
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 15px; 
-            border-bottom: 3px solid var(--border); 
-            flex-wrap: wrap; 
-            gap: 15px; 
-        }
-
-        .logo { 
-            font-size: clamp(20px, 5vw, 24px); 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            letter-spacing: -1px;
-            flex-grow: 1;
-            text-align: center;
-        }
+        /* UPDATED 3-ROW HEADER UI */
+        header { border-bottom: 3px solid var(--border); padding: 15px; display: flex; flex-direction: column; gap: 15px; }
         
-        .nav-controls { display: flex; gap: 8px; align-items: center; justify-content: center; }
-        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; transition: 0.2s; white-space: nowrap; }
+        .header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .header-center { justify-content: center; }
+
+        .logo { font-size: clamp(24px, 6vw, 32px); font-weight: bold; text-transform: uppercase; letter-spacing: -1px; }
+        
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 12px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 12px; transition: 0.2s; white-space: nowrap; }
         .btn:hover { background: var(--text); color: var(--bg); }
-        
-        .mode-btn { background: #000000 !important; color: #ffffff !important; border: 2px solid #000000 !important; }
-        body.dark-mode .mode-btn { background: #ffffff !important; color: #000000 !important; border: 2px solid #ffffff !important; }
-
         .btn.active { background: var(--text) !important; color: var(--bg) !important; }
-        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 120px; font-size: 12px; }
+
+        .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 140px; font-size: 12px; text-transform: uppercase; }
 
         /* HERO AREA */
-        .hero-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 15px; }
+        .hero-container { max-width: 1200px; margin: 25px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 15px; }
 
         .description-box { 
             border: 3px solid var(--border); 
-            padding: 20px; 
+            padding: 25px; 
             font-style: italic; 
             font-weight: bold; 
             text-align: center;
-            font-size: clamp(0.9rem, 4vw, 1.1rem);
-            line-height: 1.5;
+            font-size: clamp(0.95rem, 4vw, 1.15rem);
+            line-height: 1.6;
             min-height: 140px; 
         }
 
         @keyframes blink { 50% { opacity: 0; } }
         .cursor { display: inline-block; width: 8px; background-color: var(--text); margin-left: 2px; animation: blink 0.8s infinite; }
 
-        .hero-side-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-
-        .side-btn {
-            flex: 1;
-            min-width: 90px;
-            max-width: 150px; 
-            border: 2px solid var(--border);
-            background: none;
-            color: var(--text);
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 10px;
-            padding: 8px 5px;
-            transition: 0.2s;
-        }
+        .hero-side-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .side-btn { flex: 1; min-width: 100px; max-width: 160px; border: 2px solid var(--border); background: none; color: var(--text); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 11px; padding: 10px 5px; transition: 0.2s; }
         .side-btn.active { background: var(--text); color: var(--bg); }
 
-        .article-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        /* ARTICLE GRID */
+        .article-grid { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.2s; }
         .card:hover { transform: translateY(-3px); }
-        .card-img { height: 180px; border-bottom: 3px solid var(--border); overflow: hidden; background: #eee; }
+        .card-img { aspect-ratio: 16/9; border-bottom: 3px solid var(--border); overflow: hidden; background: #eee; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-title { padding: 12px; font-weight: bold; font-size: 16px; line-height: 1.3; }
+        .card-title { padding: 15px; font-weight: bold; font-size: 18px; line-height: 1.3; }
         
         .hidden { display: none; }
-
-        @media (max-width: 550px) {
-            header { flex-direction: column; padding: 10px; }
-            .logo { order: -1; width: 100%; margin-bottom: 5px; }
-            .nav-controls { width: 100%; justify-content: space-between; }
-            .search-bar { width: 100px; }
-        }
     </style>
 </head>
-<body>
-
-<header>
-    <div class="nav-controls">
-        <button id="modeBtn" class="btn mode-btn" onclick="toggleTheme()">MODE</button>
+<body class="dark-mode"> <header>
+    <div class="header-row">
+        <button id="modeBtn" class="btn" onclick="toggleTheme()">MODE</button>
         <input type="text" id="search" class="search-bar" placeholder="SEARCH..." onkeyup="deepSearch()">
     </div>
-    
-    <div class="logo" id="siteName">Gopikaran R</div>
-    
-    <div class="nav-controls">
+
+    <div class="header-row header-center">
+        <div class="logo" id="siteName">கRAN 🌤️</div>
+    </div>
+
+    <div class="header-row">
         <div style="border: 2px solid var(--border); display: flex;">
-            <button id="lang-en" class="btn lang-btn" style="border:none" onclick="changeLang('en')">EN</button>
-            <button id="lang-ta" class="btn lang-btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
-            <button id="lang-hi" class="btn lang-btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
+            <button id="lang-en" class="btn" style="border:none" onclick="changeLang('en')">EN</button>
+            <button id="lang-ta" class="btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
+            <button id="lang-hi" class="btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
         </div>
-        <a href="about.html" class="btn">ABOUT</a>
+        <a href="about.html" class="btn">ABOUT ME</a>
     </div>
 </header>
 
@@ -140,7 +104,7 @@
     let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
-    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); }
+    if (localStorage.getItem('theme') === 'light') { document.body.classList.remove('dark-mode'); }
 
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
@@ -185,7 +149,7 @@
         const grid = document.getElementById('grid');
         grid.innerHTML = '';
         
-        // YOUR ORIGINAL TEXT RESTORED HERE
+        // RESTORED MANIFESTO TEXT
         const uiText = {
             en: { name: "Karan 🌤️", desc: "Here, you won’t find answers. Instead, questions overflow. But those every questions will lead you to a Place of Wisdom." },
             ta: { name: "கran 🌤️", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும். ஆனால் இந்தக் கேள்விகள் உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
@@ -195,7 +159,7 @@
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         typeEffect('siteDesc', uiText[currentLang].desc);
 
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById(`lang-${currentLang}`);
         if(activeBtn) activeBtn.classList.add('active');
 
@@ -207,7 +171,7 @@
             card.setAttribute('data-searchable', searchData);
             card.innerHTML = `
                 <div class="card-img">
-                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x250?text=IMAGE+MISSING'">
+                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x225?text=IMAGE+MISSING'">
                 </div>
                 <div class="card-title">${art[currentLang].title}</div>
             `;
