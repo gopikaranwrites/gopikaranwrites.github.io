@@ -16,23 +16,27 @@
         * { box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER LAYOUT - MATCHING SCREENSHOT EDGES */
+        /* HEADER - FORCED 3-ROW LAYOUT WITH EDGE-TO-EDGE SPACING */
         header { 
             border-bottom: 3px solid var(--border); 
-            padding: 15px 10px; 
+            padding: 15px 10px; /* Minimal side padding to touch the edges */
             display: flex; 
             flex-direction: column; 
-            gap: 20px; 
+            gap: 15px; 
+            width: 100%;
         }
         
         .header-row { 
             display: flex; 
-            justify-content: space-between; /* Pushes elements to far left and right */
+            justify-content: space-between; /* This pushes items to the far left and right */
             align-items: center; 
             width: 100%; 
         }
         
-        .header-center { justify-content: center; } /* For the Logo row */
+        /* Specific row for the centered logo */
+        .header-center { 
+            justify-content: center; 
+        }
 
         .logo { font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: -1px; }
         
@@ -40,10 +44,10 @@
         .btn:hover { background: var(--text); color: var(--bg); }
         .btn.active { background: var(--text) !important; color: var(--bg) !important; }
 
-        .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 160px; text-transform: uppercase; font-size: 12px; }
+        .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 150px; text-transform: uppercase; font-size: 12px; }
 
         /* HERO AREA */
-        .hero-container { max-width: 1200px; margin: 25px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 15px; }
+        .hero-container { width: 100%; max-width: 1200px; margin: 25px auto; padding: 0 10px; display: flex; flex-direction: column; gap: 15px; }
 
         .description-box { 
             border: 3px solid var(--border); 
@@ -54,20 +58,20 @@
             font-size: clamp(1rem, 4vw, 1.2rem);
             line-height: 1.6;
             min-height: 140px; 
+            position: relative;
         }
 
         @keyframes blink { 50% { opacity: 0; } }
-        .cursor { display: inline-block; width: 10px; background-color: var(--text); margin-left: 2px; animation: blink 0.8s infinite; }
+        .cursor { display: inline-block; width: 12px; height: 24px; background-color: var(--text); vertical-align: middle; margin-left: 5px; animation: blink 0.8s infinite; }
 
         .hero-side-nav { display: flex; gap: 10px; justify-content: center; }
         .side-btn { flex: 1; max-width: 140px; border: 2px solid var(--border); background: none; color: var(--text); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 11px; padding: 10px; transition: 0.2s; }
         .side-btn.active { background: var(--text); color: var(--bg); }
 
-        /* GRID SYSTEM */
-        .article-grid { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        /* ARTICLE GRID */
+        .article-grid { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 15px; max-width: 1200px; margin: 0 auto; }
         @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        /* CARDS */
         .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.2s; }
         .card:hover { transform: scale(1.02); }
         .card-img { aspect-ratio: 16/9; border-bottom: 3px solid var(--border); overflow: hidden; background: #eee; }
@@ -124,16 +128,16 @@
 
     function typeEffect(elementId, text) {
         let i = 0;
-        const speed = 40;
+        const speed = 45;
         const element = document.getElementById(elementId);
         element.innerHTML = "";
         function type() {
             if (i < text.length) {
-                element.innerHTML = text.substring(0, i + 1) + '<span class="cursor">&nbsp;</span>';
+                element.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
                 i++;
                 setTimeout(type, speed);
             } else {
-                element.innerHTML = text + '<span class="cursor">&nbsp;</span>';
+                element.innerHTML = text + '<span class="cursor"></span>';
             }
         }
         type();
