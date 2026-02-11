@@ -12,15 +12,15 @@
         :root { --bg: #000000; --text: #ffffff; --border: #ffffff; }
         body.light-mode { --bg: #ffffff; --text: #000000; --border: #000000; }
         
-        /* HIDE SCROLLBAR FOR NEAT UI */
+        /* HIDE SCROLLBAR */
         ::-webkit-scrollbar { display: none; }
         * { box-sizing: border-box; -ms-overflow-style: none; scrollbar-width: none; }
 
         body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER - RESPONSIVE */
+        /* HEADER */
         header { 
-            border-bottom: 2px solid var(--border); /* Minimized border */
+            border-bottom: 2px solid var(--border); 
             padding: 10px; 
             display: flex; 
             flex-direction: column; 
@@ -32,18 +32,7 @@
         .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; }
 
         /* BUTTON TOGGLE STATES */
-        .btn { 
-            border: 2px solid var(--border); 
-            background: none; 
-            color: var(--text); 
-            padding: 6px 10px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            font-size: 11px; 
-            transition: 0.2s;
-        }
-        /* Active class for Mode and Language buttons */
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 11px; transition: 0.2s; text-decoration: none; }
         .btn.active { background: var(--text); color: var(--bg); }
 
         .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 140px; text-transform: uppercase; font-size: 11px; }
@@ -54,20 +43,21 @@
             .header-row { width: auto; }
         }
 
-        /* HERO AREA - MINIMIZED BORDER */
+        /* HERO AREA - FULL MANIFESTO */
         .hero-container { width: 100%; margin-top: 15px; padding: 0 10px; display: flex; flex-direction: column; gap: 12px; }
         @media (min-width: 1024px) { .hero-container { max-width: 1100px; margin: 30px auto 0; } }
 
         .description-box { 
-            border: 2px solid var(--border); /* Minimized from 3px to 2px */
-            padding: 20px 15px; 
+            border: 2px solid var(--border); 
+            padding: 25px 15px; 
             font-style: italic; font-weight: bold; text-align: center;
-            font-size: 1rem; line-height: 1.4; min-height: 80px;
+            font-size: 1rem; line-height: 1.6; min-height: 120px;
             display: flex; align-items: center; justify-content: center;
+            white-space: pre-line; /* Preserves your line breaks */
         }
 
         @keyframes blink { 50% { opacity: 0; } }
-        .cursor { display: inline-block; width: 12px; height: 20px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
+        .cursor { display: inline-block; width: 12px; height: 18px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
 
         /* FILTERS - CENTERED */
         .hero-side-nav { display: flex; gap: 8px; justify-content: center; width: 100%; margin-top: 5px; } 
@@ -123,7 +113,6 @@
     let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
-    // On Load: Check Theme and Language buttons
     window.onload = () => {
         if (localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-mode');
@@ -155,8 +144,13 @@
     function typeEffect(elementId, text) {
         let i = 0; const el = document.getElementById(elementId); el.innerHTML = "";
         function type() {
-            if (i < text.length) { el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>'; i++; setTimeout(type, 40); }
-            else { el.innerHTML = text + '<span class="cursor"></span>'; }
+            if (i < text.length) { 
+                el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>'; 
+                i++; 
+                setTimeout(type, 30); // Faster typing for long manifesto
+            } else { 
+                el.innerHTML = text + '<span class="cursor"></span>'; 
+            }
         }
         type();
     }
@@ -181,9 +175,9 @@
     function renderUI() {
         const grid = document.getElementById('grid'); grid.innerHTML = '';
         const uiText = {
-            en: { name: "Karan 🌤️", desc: "Here, you won’t find answers. Instead, questions overflow." },
-            ta: { name: "கran 🌤️", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும்." },
-            hi: { name: "कran 🌤️", desc: "यहाँ आपको उत्तर नहीं मिलेंगे; इसके बजाय प्रश्न ही अधिक होंगे।" }
+            en: { name: "Karan 🌤️", desc: `Here, you won’t find answers.\nInstead, questions overflow.\nBut those every questions\nwill lead you to a Place of Wisdom.` },
+            ta: { name: "கran 🌤️", desc: `இங்கு பதில்கள் கிடைக்காது;\nஅதற்கு பதிலாக கேள்விகளே மிஞ்சும்.\nஆனால் இந்தக் கேள்விகள்தான்\nஉங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்.` },
+            hi: { name: "कran 🌤️", desc: `यहाँ आपको उत्तर नहीं मिलेंगे;\nइसके बजाय प्रश्न ही अधिक होंगे।\nलेकिन वही प्रश्न\nआपको ज्ञान के स्थान की ओर ले जाएँगे।` }
         };
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         typeEffect('siteDesc', uiText[currentLang].desc);
