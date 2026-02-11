@@ -12,65 +12,65 @@
         :root { --bg: #000000; --text: #ffffff; --border: #ffffff; }
         body.light-mode { --bg: #ffffff; --text: #000000; --border: #000000; }
         
-        * { box-sizing: border-box; }
+        /* HIDE SCROLLBAR FOR NEAT UI */
+        ::-webkit-scrollbar { display: none; }
+        * { box-sizing: border-box; -ms-overflow-style: none; scrollbar-width: none; }
+
         body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER BASE (Mobile Default - Left Aligned) */
+        /* HEADER - RESPONSIVE */
         header { 
-            border-bottom: 3px solid var(--border); 
+            border-bottom: 2px solid var(--border); /* Minimized border */
             padding: 10px; 
             display: flex; 
             flex-direction: column; 
-            gap: 10px; 
+            gap: 12px; 
             width: 100%;
         }
         
-        .header-row { 
-            display: flex; 
-            justify-content: flex-start; 
-            align-items: center; 
-            gap: 10px; 
-            width: 100%; 
-        }
-
+        .header-row { display: flex; justify-content: flex-start; align-items: center; gap: 10px; width: 100%; }
         .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; }
-        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; white-space: nowrap; }
-        .btn:hover { background: var(--text); color: var(--bg); }
+
+        /* BUTTON TOGGLE STATES */
+        .btn { 
+            border: 2px solid var(--border); 
+            background: none; 
+            color: var(--text); 
+            padding: 6px 10px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            transition: 0.2s;
+        }
+        /* Active class for Mode and Language buttons */
+        .btn.active { background: var(--text); color: var(--bg); }
+
         .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 140px; text-transform: uppercase; font-size: 11px; }
 
-        /* DESKTOP WEB VIEW (Large Screens) */
         @media (min-width: 1024px) {
-            header {
-                flex-direction: row; /* Change to single row */
-                justify-content: space-between; /* Space out elements */
-                align-items: center;
-                padding: 15px 30px;
-            }
-            .header-row { width: auto; gap: 20px; }
-            
-            /* Specific Order for Web */
-            .row-left { order: 1; }
-            .row-center { order: 2; flex-grow: 1; justify-content: center; }
-            .row-right { order: 3; }
+            header { flex-direction: row; justify-content: space-between; padding: 15px 30px; position: relative; }
+            .row-center { position: absolute; left: 50%; transform: translateX(-50%); }
+            .header-row { width: auto; }
         }
 
-        /* HERO AREA */
+        /* HERO AREA - MINIMIZED BORDER */
         .hero-container { width: 100%; margin-top: 15px; padding: 0 10px; display: flex; flex-direction: column; gap: 12px; }
         @media (min-width: 1024px) { .hero-container { max-width: 1100px; margin: 30px auto 0; } }
 
         .description-box { 
-            border: 3px solid var(--border); 
-            padding: 15px 10px; 
+            border: 2px solid var(--border); /* Minimized from 3px to 2px */
+            padding: 20px 15px; 
             font-style: italic; font-weight: bold; text-align: center;
-            font-size: 1rem; line-height: 1.4; min-height: 100px;
+            font-size: 1rem; line-height: 1.4; min-height: 80px;
             display: flex; align-items: center; justify-content: center;
         }
 
         @keyframes blink { 50% { opacity: 0; } }
-        .cursor { display: inline-block; width: 12px; height: 24px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
+        .cursor { display: inline-block; width: 12px; height: 20px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
 
-        /* FILTERS - CENTERED ALWAYS */
-        .hero-side-nav { display: flex; gap: 8px; justify-content: center; width: 100%; margin-bottom: 10px; }
+        /* FILTERS - CENTERED */
+        .hero-side-nav { display: flex; gap: 8px; justify-content: center; width: 100%; margin-top: 5px; } 
         .side-btn { flex: 1; max-width: 110px; border: 2px solid var(--border); background: none; color: var(--text); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 10px; padding: 8px; }
         .side-btn.active { background: var(--text); color: var(--bg); }
 
@@ -79,10 +79,10 @@
         @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1024px) { .article-grid { grid-template-columns: repeat(3, 1fr); max-width: 1200px; margin: 0 auto; } }
 
-        .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .card-img { aspect-ratio: 16/9; border-bottom: 3px solid var(--border); overflow: hidden; background: #222; }
+        .card { border: 2px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.2s; }
+        .card-img { aspect-ratio: 16/9; border-bottom: 2px solid var(--border); overflow: hidden; background: #222; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-title { padding: 12px; font-weight: bold; font-size: 16px; border-top: 3px solid var(--border); }
+        .card-title { padding: 12px; font-weight: bold; font-size: 16px; border-top: 2px solid var(--border); }
         .hidden { display: none; }
     </style>
 </head>
@@ -100,20 +100,20 @@
 
     <div class="header-row row-right">
         <div style="border: 2px solid var(--border); display: flex;">
-            <button id="lang-en" class="btn" style="border:none" onclick="changeLang('en')">EN</button>
-            <button id="lang-ta" class="btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
-            <button id="lang-hi" class="btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
+            <button id="lang-en" class="btn lang-toggle" style="border:none" onclick="changeLang('en')">EN</button>
+            <button id="lang-ta" class="btn lang-toggle" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
+            <button id="lang-hi" class="btn lang-toggle" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
         </div>
-        <a href="about.html" class="btn">ABOUT</a>
+        <a href="about.html" class="btn">ABOUT ME</a>
     </div>
 </header>
 
 <section class="hero-container">
     <div class="description-box" id="siteDesc"></div>
     <div class="hero-side-nav">
-        <button class="side-btn" data-tag="#social" onclick="quickFilter('#social', this)">social</button>
-        <button class="side-btn" data-tag="#review" onclick="quickFilter('#review', this)">review</button>
-        <button class="side-btn" data-tag="#random" onclick="quickFilter('#random', this)">random</button>
+        <button class="side-btn filter-opt" data-tag="#social" onclick="quickFilter('#social', this)">social</button>
+        <button class="side-btn filter-opt" data-tag="#review" onclick="quickFilter('#review', this)">review</button>
+        <button class="side-btn filter-opt" data-tag="#random" onclick="quickFilter('#random', this)">random</button>
     </div>
 </section>
 
@@ -123,9 +123,33 @@
     let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
+    // On Load: Check Theme and Language buttons
+    window.onload = () => {
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('modeBtn').classList.add('active');
+        }
+        updateLangButtons();
+    };
+
     function toggleTheme() {
-        document.body.classList.toggle('light-mode');
-        localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        const isLight = document.body.classList.toggle('light-mode');
+        document.getElementById('modeBtn').classList.toggle('active', isLight);
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
+
+    function updateLangButtons() {
+        document.querySelectorAll('.lang-toggle').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.id === `lang-${currentLang}`) btn.classList.add('active');
+        });
+    }
+
+    function changeLang(lang) {
+        currentLang = lang;
+        localStorage.setItem('prefLang', lang);
+        updateLangButtons();
+        renderUI();
     }
 
     function typeEffect(elementId, text) {
@@ -168,19 +192,19 @@
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
-            card.setAttribute('data-searchable', (art[currentLang].title + " " + art.tags).toLowerCase());
+            card.setAttribute('data-searchable', (art[currentLang].title + " " + (art.tags || "")).toLowerCase());
             card.innerHTML = `<div class="card-img"><img src="${art.image}"></div><div class="card-title">${art[currentLang].title}</div>`;
             grid.appendChild(card);
         });
     }
 
-    function changeLang(lang) { currentLang = lang; renderUI(); }
     function deepSearch() {
         const query = document.getElementById('search').value.toLowerCase().trim();
         document.querySelectorAll('.article-item').forEach(item => {
             item.classList.toggle('hidden', !item.getAttribute('data-searchable').includes(query));
         });
     }
+
     function quickFilter(tag, el) {
         const searchInput = document.getElementById('search');
         searchInput.value = (searchInput.value === tag) ? "" : tag;
@@ -188,6 +212,7 @@
         document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
         if(searchInput.value !== "") el.classList.add('active');
     }
+
     init();
 </script>
 </body>
