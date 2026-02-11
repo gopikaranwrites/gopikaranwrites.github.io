@@ -3,122 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gopikaran R | Official Portfolio</title>
+    
+    <title>Gopikaran R | Official Writing Portfolio</title>
     
     <link rel="icon" type="image/png" href="images/gk%20black.png">
     <link rel="apple-touch-icon" href="images/gk%20black.png">
 
+    <meta name="description" content="Explore the creative writing and insights of Gopikaran R. Articles available in English, Tamil (தமிழ்), and Hindi (हिन्दी).">
+    <meta name="keywords" content="Gopikaran R, Tamil Writer, creative writing portfolio">
+    <meta name="author" content="Gopikaran R">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Gopikaran R",
+      "url": "https://gopikaran.github.io/",
+      "jobTitle": "Writer",
+      "sameAs": ["https://www.linkedin.com/in/gopikaran-r-266066275"]
+    }
+    </script>
+
     <style>
-        :root { --bg: #000000; --text: #ffffff; --border: #ffffff; }
-        body.light-mode { --bg: #ffffff; --text: #000000; --border: #000000; }
+        :root { --bg: #ffffff; --text: #000000; --border: #000000; }
+        body.dark-mode { --bg: #000000; --text: #ffffff; --border: #ffffff; }
         
         * { box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER - ALL STACKED LEFT */
+        /* HEADER - FIXED FOR MOBILE ALIGNMENT */
         header { 
-            border-bottom: 3px solid var(--border); 
-            padding: 10px 10px; 
             display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            width: 100%;
-        }
-        
-        .header-row { 
-            display: flex; 
-            justify-content: flex-start; /* EVERYTHING PUSHED LEFT */
+            justify-content: space-between; 
             align-items: center; 
-            gap: 10px; 
-            width: 100%; 
+            padding: 15px; 
+            border-bottom: 3px solid var(--border); 
+            flex-wrap: wrap; 
+            gap: 15px; 
         }
 
         .logo { 
-            font-size: 24px; 
+            font-size: clamp(20px, 5vw, 24px); 
             font-weight: bold; 
             text-transform: uppercase; 
-            text-align: left; 
+            letter-spacing: -1px;
+            flex-grow: 1;
+            text-align: center;
         }
         
-        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; transition: 0.2s; white-space: nowrap; }
+        .nav-controls { display: flex; gap: 8px; align-items: center; justify-content: center; }
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 5px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; transition: 0.2s; white-space: nowrap; }
         .btn:hover { background: var(--text); color: var(--bg); }
+        
+        .mode-btn { background: #000000 !important; color: #ffffff !important; border: 2px solid #000000 !important; }
+        body.dark-mode .mode-btn { background: #ffffff !important; color: #000000 !important; border: 2px solid #ffffff !important; }
+
         .btn.active { background: var(--text) !important; color: var(--bg) !important; }
+        .search-bar { border: 2px solid var(--border); padding: 5px; background: transparent; color: var(--text); outline: none; width: 120px; font-size: 12px; }
 
-        .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 140px; text-transform: uppercase; font-size: 11px; }
-
-        /* HERO AREA - MINIMIZED BANNER */
-        .hero-container { width: 100%; margin-top: 15px; padding: 0 10px; display: flex; flex-direction: column; gap: 12px; }
+        /* HERO AREA */
+        .hero-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: flex; flex-direction: column; gap: 15px; }
 
         .description-box { 
             border: 3px solid var(--border); 
-            padding: 15px 10px; /* Reduced padding to minimize size */
+            padding: 20px; 
             font-style: italic; 
             font-weight: bold; 
             text-align: center;
-            font-size: 1rem;
-            line-height: 1.4;
-            min-height: 100px; /* Lowered min-height for compact view */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
+            line-height: 1.5;
+            min-height: 140px; 
         }
 
-        /* Large block cursor */
         @keyframes blink { 50% { opacity: 0; } }
-        .cursor { display: inline-block; width: 12px; height: 24px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
+        .cursor { display: inline-block; width: 8px; background-color: var(--text); margin-left: 2px; animation: blink 0.8s infinite; }
 
-        /* FILTER SECTION - CENTERED */
-        .hero-side-nav { 
-            display: flex; 
-            gap: 8px; 
-            justify-content: center; /* Pushes filters to the center */
-            width: 100%; 
-        } 
-        .side-btn { 
-            flex: 1; 
-            max-width: 110px; /* Prevents buttons from stretching too far */
-            border: 2px solid var(--border); 
-            background: none; 
-            color: var(--text); 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            font-size: 10px; 
-            padding: 8px; 
+        .hero-side-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+        .side-btn {
+            flex: 1;
+            min-width: 90px;
+            max-width: 150px; 
+            border: 2px solid var(--border);
+            background: none;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10px;
+            padding: 8px 5px;
+            transition: 0.2s;
         }
         .side-btn.active { background: var(--text); color: var(--bg); }
 
-        /* ARTICLE GRID */
-        .article-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 15px; width: 100%; }
-        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); max-width: 1200px; margin: 0 auto; } }
+        /* GRID SYSTEM */
+        .article-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); } }
 
+        /* CARDS */
         .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.2s; }
-        .card-img { aspect-ratio: 16/9; border-bottom: 3px solid var(--border); overflow: hidden; background: #222; }
+        .card:hover { transform: translateY(-3px); }
+        .card-img { height: 180px; border-bottom: 3px solid var(--border); overflow: hidden; background: #eee; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-title { padding: 12px; font-weight: bold; font-size: 16px; line-height: 1.3; border-top: 3px solid var(--border); }
+        .card-title { padding: 12px; font-weight: bold; font-size: 16px; line-height: 1.3; }
         
         .hidden { display: none; }
+
+        /* MOBILE FIX: STACK HEADER ELEMENTS */
+        @media (max-width: 550px) {
+            header { flex-direction: column; padding: 10px; }
+            .logo { order: -1; width: 100%; margin-bottom: 5px; }
+            .nav-controls { width: 100%; justify-content: space-between; }
+            .search-bar { width: 100px; }
+        }
     </style>
 </head>
-<body class="dark-mode">
+<body>
 
 <header>
-    <div class="header-row">
-        <button id="modeBtn" class="btn" onclick="toggleTheme()">MODE</button>
+    <div class="nav-controls">
+        <button id="modeBtn" class="btn mode-btn" onclick="toggleTheme()">MODE</button>
         <input type="text" id="search" class="search-bar" placeholder="SEARCH..." onkeyup="deepSearch()">
     </div>
-
-    <div class="header-row">
-        <div class="logo" id="siteName">கRAN 🌤️</div>
-    </div>
-
-    <div class="header-row">
+    
+    <div class="logo" id="siteName">Gopikaran R</div>
+    
+    <div class="nav-controls">
         <div style="border: 2px solid var(--border); display: flex;">
-            <button id="lang-en" class="btn" style="border:none" onclick="changeLang('en')">EN</button>
-            <button id="lang-ta" class="btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
-            <button id="lang-hi" class="btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
+            <button id="lang-en" class="btn lang-btn" style="border:none" onclick="changeLang('en')">EN</button>
+            <button id="lang-ta" class="btn lang-btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
+            <button id="lang-hi" class="btn lang-btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
         </div>
-        <a href="about.html" class="btn">ABOUT ME</a>
+        <a href="about.html" class="btn">ABOUT</a>
     </div>
 </header>
 
@@ -138,24 +154,26 @@
     let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
-    if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); }
 
     function toggleTheme() {
-        document.body.classList.toggle('light-mode');
-        localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
 
     function typeEffect(elementId, text) {
         let i = 0;
-        const el = document.getElementById(elementId);
-        el.innerHTML = "";
+        const speed = 35;
+        const element = document.getElementById(elementId);
+        element.innerHTML = "";
+        
         function type() {
             if (i < text.length) {
-                el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
+                element.innerHTML = text.substring(0, i + 1) + '<span class="cursor">&nbsp;</span>';
                 i++;
-                setTimeout(type, 40);
+                setTimeout(type, speed);
             } else {
-                el.innerHTML = text + '<span class="cursor"></span>';
+                element.innerHTML = text + '<span class="cursor">&nbsp;</span>';
             }
         }
         type();
@@ -165,6 +183,7 @@
         try {
             const listRes = await fetch('list.json');
             const fileList = await listRes.json();
+            
             allArticles = [];
             for (let fileName of fileList) {
                 const artRes = await fetch(`data/${fileName}`);
@@ -175,7 +194,7 @@
                 }
             }
             renderUI();
-        } catch (e) { console.error("Data Load Error:", e); }
+        } catch (e) { console.error(e); }
     }
 
     function renderUI() {
@@ -183,28 +202,35 @@
         grid.innerHTML = '';
         
         const uiText = {
-            en: { name: "Karan 🌤️", desc: "Here, you won’t find answers. Instead, questions overflow. But those every questions will lead you to a Place of Wisdom." },
-            ta: { name: "கran 🌤️", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும். ஆனால் இந்தக் கேள்விகள் உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
-            hi: { name: "कran 🌤️", desc: "यहाँ आपको उत्तर नहीं मिलेंगे; इसके बजाय प्रश्न ही अधिक होंगे। लेकिन वही प्रश्न आपको ज्ञान के स्थान की ओर ले जाएँगे।" }
+            en: { name: "Karan 🌤️", desc: "I am a collector of contradictions. Some days I build with logic; other days, I wander through emotion. I’m just here to see as much as I can while the light is still good." },
+            ta: { name: "கran 🌤️", desc: "முரண்பாடுகளின் தொகுப்பு நான். ஒருநாள் தர்க்கத்தால் உருவாக்குவேன்; மற்றொரு நாள் உணர்வுகளால் அலைந்து திரிவேன். வெளிச்சம் இருக்கும் வரை அனைத்தையும் காண விழைகிறேன்." },
+            hi: { name: "कran 🌤️", desc: "मैं विरोधाभासों का संग्रह हूँ। कभी तर्क के साथ निर्माण करता हूँ, तो कभी भावनाओं के साथ भटकता हूँ। मैं यहाँ बस तब तक सब कुछ देखने आया हूँ जब तक रोशनी अच्छी है।" }
         };
         
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         typeEffect('siteDesc', uiText[currentLang].desc);
 
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`lang-${currentLang}`);
+        if(activeBtn) activeBtn.classList.add('active');
+
         allArticles.forEach((art) => {
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
+            
             const searchData = (art[currentLang].title + " " + art.tags).toLowerCase();
             card.setAttribute('data-searchable', searchData);
+            
             card.innerHTML = `
                 <div class="card-img">
-                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x225?text=IMAGE+MISSING'">
+                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x250?text=IMAGE+MISSING'">
                 </div>
                 <div class="card-title">${art[currentLang].title}</div>
             `;
             grid.appendChild(card);
         });
+        deepSearch();
     }
 
     function changeLang(lang) {
@@ -219,14 +245,16 @@
             const content = item.getAttribute('data-searchable');
             item.classList.toggle('hidden', !content.includes(query));
         });
+
+        document.querySelectorAll('.filter-opt').forEach(btn => {
+            btn.classList.toggle('active', query !== "" && btn.getAttribute('data-tag') === query);
+        });
     }
 
     function quickFilter(tag, el) {
         const searchInput = document.getElementById('search');
         searchInput.value = (searchInput.value === tag) ? "" : tag;
         deepSearch();
-        document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
-        if(searchInput.value !== "") el.classList.add('active');
     }
 
     init();
