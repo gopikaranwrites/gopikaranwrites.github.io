@@ -15,120 +15,105 @@
         * { box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); margin: 0; font-family: 'Courier New', Courier, monospace; transition: 0.3s; overflow-x: hidden; }
         
-        /* HEADER - ALL STACKED LEFT */
+        /* HEADER BASE (Mobile Default - Left Aligned) */
         header { 
             border-bottom: 3px solid var(--border); 
-            padding: 10px 10px; 
+            padding: 10px; 
             display: flex; 
             flex-direction: column; 
-            gap: 12px; 
+            gap: 10px; 
             width: 100%;
         }
         
         .header-row { 
             display: flex; 
-            justify-content: flex-start; /* EVERYTHING PUSHED LEFT */
+            justify-content: flex-start; 
             align-items: center; 
             gap: 10px; 
             width: 100%; 
         }
 
-        .logo { 
-            font-size: 24px; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            text-align: left; 
-        }
-        
-        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; transition: 0.2s; white-space: nowrap; }
+        .logo { font-size: 24px; font-weight: bold; text-transform: uppercase; }
+        .btn { border: 2px solid var(--border); background: none; color: var(--text); padding: 6px 10px; cursor: pointer; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 11px; white-space: nowrap; }
         .btn:hover { background: var(--text); color: var(--bg); }
-        .btn.active { background: var(--text) !important; color: var(--bg) !important; }
-
         .search-bar { border: 2px solid var(--border); padding: 6px; background: transparent; color: var(--text); outline: none; width: 140px; text-transform: uppercase; font-size: 11px; }
 
-        /* HERO AREA - MINIMIZED BANNER */
+        /* DESKTOP WEB VIEW (Large Screens) */
+        @media (min-width: 1024px) {
+            header {
+                flex-direction: row; /* Change to single row */
+                justify-content: space-between; /* Space out elements */
+                align-items: center;
+                padding: 15px 30px;
+            }
+            .header-row { width: auto; gap: 20px; }
+            
+            /* Specific Order for Web */
+            .row-left { order: 1; }
+            .row-center { order: 2; flex-grow: 1; justify-content: center; }
+            .row-right { order: 3; }
+        }
+
+        /* HERO AREA */
         .hero-container { width: 100%; margin-top: 15px; padding: 0 10px; display: flex; flex-direction: column; gap: 12px; }
+        @media (min-width: 1024px) { .hero-container { max-width: 1100px; margin: 30px auto 0; } }
 
         .description-box { 
             border: 3px solid var(--border); 
-            padding: 15px 10px; /* Reduced padding to minimize size */
-            font-style: italic; 
-            font-weight: bold; 
-            text-align: center;
-            font-size: 1rem;
-            line-height: 1.4;
-            min-height: 100px; /* Lowered min-height for compact view */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 15px 10px; 
+            font-style: italic; font-weight: bold; text-align: center;
+            font-size: 1rem; line-height: 1.4; min-height: 100px;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* Large block cursor */
         @keyframes blink { 50% { opacity: 0; } }
         .cursor { display: inline-block; width: 12px; height: 24px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
 
-        /* FILTER SECTION - CENTERED */
-        .hero-side-nav { 
-            display: flex; 
-            gap: 8px; 
-            justify-content: center; /* Pushes filters to the center */
-            width: 100%; 
-        } 
-        .side-btn { 
-            flex: 1; 
-            max-width: 110px; /* Prevents buttons from stretching too far */
-            border: 2px solid var(--border); 
-            background: none; 
-            color: var(--text); 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            font-size: 10px; 
-            padding: 8px; 
-        }
+        /* FILTERS - CENTERED ALWAYS */
+        .hero-side-nav { display: flex; gap: 8px; justify-content: center; width: 100%; margin-bottom: 10px; }
+        .side-btn { flex: 1; max-width: 110px; border: 2px solid var(--border); background: none; color: var(--text); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 10px; padding: 8px; }
         .side-btn.active { background: var(--text); color: var(--bg); }
 
         /* ARTICLE GRID */
         .article-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 15px; width: 100%; }
-        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(3, 1fr); max-width: 1200px; margin: 0 auto; } }
+        @media (min-width: 768px) { .article-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .article-grid { grid-template-columns: repeat(3, 1fr); max-width: 1200px; margin: 0 auto; } }
 
-        .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.2s; }
+        .card { border: 3px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; }
         .card-img { aspect-ratio: 16/9; border-bottom: 3px solid var(--border); overflow: hidden; background: #222; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-title { padding: 12px; font-weight: bold; font-size: 16px; line-height: 1.3; border-top: 3px solid var(--border); }
-        
+        .card-title { padding: 12px; font-weight: bold; font-size: 16px; border-top: 3px solid var(--border); }
         .hidden { display: none; }
     </style>
 </head>
 <body class="dark-mode">
 
 <header>
-    <div class="header-row">
+    <div class="header-row row-left">
         <button id="modeBtn" class="btn" onclick="toggleTheme()">MODE</button>
         <input type="text" id="search" class="search-bar" placeholder="SEARCH..." onkeyup="deepSearch()">
     </div>
 
-    <div class="header-row">
+    <div class="header-row row-center">
         <div class="logo" id="siteName">கRAN 🌤️</div>
     </div>
 
-    <div class="header-row">
+    <div class="header-row row-right">
         <div style="border: 2px solid var(--border); display: flex;">
             <button id="lang-en" class="btn" style="border:none" onclick="changeLang('en')">EN</button>
             <button id="lang-ta" class="btn" style="border-left:2px solid var(--border); border-right:2px solid var(--border); border-top:none; border-bottom:none" onclick="changeLang('ta')">தமிழ்</button>
             <button id="lang-hi" class="btn" style="border:none" onclick="changeLang('hi')">हिन्दी</button>
         </div>
-        <a href="about.html" class="btn">ABOUT ME</a>
+        <a href="about.html" class="btn">ABOUT</a>
     </div>
 </header>
 
 <section class="hero-container">
     <div class="description-box" id="siteDesc"></div>
-    
     <div class="hero-side-nav">
-        <button class="side-btn filter-opt" data-tag="#social" onclick="quickFilter('#social', this)">social</button>
-        <button class="side-btn filter-opt" data-tag="#review" onclick="quickFilter('#review', this)">review</button>
-        <button class="side-btn filter-opt" data-tag="#random" onclick="quickFilter('#random', this)">random</button>
+        <button class="side-btn" data-tag="#social" onclick="quickFilter('#social', this)">social</button>
+        <button class="side-btn" data-tag="#review" onclick="quickFilter('#review', this)">review</button>
+        <button class="side-btn" data-tag="#random" onclick="quickFilter('#random', this)">random</button>
     </div>
 </section>
 
@@ -138,25 +123,16 @@
     let currentLang = localStorage.getItem('prefLang') || 'ta';
     let allArticles = [];
 
-    if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
-
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
         localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
 
     function typeEffect(elementId, text) {
-        let i = 0;
-        const el = document.getElementById(elementId);
-        el.innerHTML = "";
+        let i = 0; const el = document.getElementById(elementId); el.innerHTML = "";
         function type() {
-            if (i < text.length) {
-                el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
-                i++;
-                setTimeout(type, 40);
-            } else {
-                el.innerHTML = text + '<span class="cursor"></span>';
-            }
+            if (i < text.length) { el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>'; i++; setTimeout(type, 40); }
+            else { el.innerHTML = text + '<span class="cursor"></span>'; }
         }
         type();
     }
@@ -175,19 +151,16 @@
                 }
             }
             renderUI();
-        } catch (e) { console.error("Data Load Error:", e); }
+        } catch (e) { console.error("Error:", e); }
     }
 
     function renderUI() {
-        const grid = document.getElementById('grid');
-        grid.innerHTML = '';
-        
+        const grid = document.getElementById('grid'); grid.innerHTML = '';
         const uiText = {
-            en: { name: "Karan 🌤️", desc: "Here, you won’t find answers. Instead, questions overflow. But those every questions will lead you to a Place of Wisdom." },
-            ta: { name: "கran 🌤️", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும். ஆனால் இந்தக் கேள்விகள் உங்களை நடத்திச் செல்லும் இடம் – அறிவாலயம்." },
-            hi: { name: "कran 🌤️", desc: "यहाँ आपको उत्तर नहीं मिलेंगे; इसके बजाय प्रश्न ही अधिक होंगे। लेकिन वही प्रश्न आपको ज्ञान के स्थान की ओर ले जाएँगे।" }
+            en: { name: "Karan 🌤️", desc: "Here, you won’t find answers. Instead, questions overflow." },
+            ta: { name: "கran 🌤️", desc: "இங்கு பதில்கள் கிடைக்காது; அதற்கு பதிலாக கேள்விகளே மிஞ்சும்." },
+            hi: { name: "कran 🌤️", desc: "यहाँ आपको उत्तर नहीं मिलेंगे; इसके बजाय प्रश्न ही अधिक होंगे।" }
         };
-        
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         typeEffect('siteDesc', uiText[currentLang].desc);
 
@@ -195,32 +168,19 @@
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
-            const searchData = (art[currentLang].title + " " + art.tags).toLowerCase();
-            card.setAttribute('data-searchable', searchData);
-            card.innerHTML = `
-                <div class="card-img">
-                    <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x225?text=IMAGE+MISSING'">
-                </div>
-                <div class="card-title">${art[currentLang].title}</div>
-            `;
+            card.setAttribute('data-searchable', (art[currentLang].title + " " + art.tags).toLowerCase());
+            card.innerHTML = `<div class="card-img"><img src="${art.image}"></div><div class="card-title">${art[currentLang].title}</div>`;
             grid.appendChild(card);
         });
     }
 
-    function changeLang(lang) {
-        currentLang = lang;
-        localStorage.setItem('prefLang', lang);
-        renderUI();
-    }
-
+    function changeLang(lang) { currentLang = lang; renderUI(); }
     function deepSearch() {
         const query = document.getElementById('search').value.toLowerCase().trim();
         document.querySelectorAll('.article-item').forEach(item => {
-            const content = item.getAttribute('data-searchable');
-            item.classList.toggle('hidden', !content.includes(query));
+            item.classList.toggle('hidden', !item.getAttribute('data-searchable').includes(query));
         });
     }
-
     function quickFilter(tag, el) {
         const searchInput = document.getElementById('search');
         searchInput.value = (searchInput.value === tag) ? "" : tag;
@@ -228,7 +188,6 @@
         document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
         if(searchInput.value !== "") el.classList.add('active');
     }
-
     init();
 </script>
 </body>
