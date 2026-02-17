@@ -9,7 +9,6 @@
         :root { --bg: #ffffff; --text: #000000; --border: #000000; --accent: #f9f9f9; }
         body.dark-mode { --bg: #000000; --text: #ffffff; --border: #ffffff; --accent: #111111; }
         
-        /* HIDE SCROLLBAR FOR NEAT UI */
         ::-webkit-scrollbar { display: none; }
         * { box-sizing: border-box; -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -21,59 +20,66 @@
             font-family: 'Courier New', Courier, monospace; 
             transition: 0.3s;
             overflow-x: hidden;
-            /* Text selection is now ENABLED by default */
         }
 
-        .container { max-width: 800px; margin: 0 auto; position: relative; }
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            position: relative; 
+            padding-bottom: 50px;
+        }
         
         .back-btn { display: inline-block; border: 2px solid var(--border); padding: 5px 15px; text-decoration: none; color: var(--text); font-weight: bold; margin-bottom: 20px; text-transform: uppercase; font-size: 12px; }
         .back-btn:hover { background: var(--text); color: var(--bg); }
 
-        /* MINIMIZED BORDER (2px) */
-        .title-box { border: 2px solid var(--border); padding: 30px; text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; position: relative; background: var(--bg); }
+        .title-box { 
+            border: 2px solid var(--border); 
+            padding: 40px 20px; 
+            text-align: center; 
+            font-size: 2rem; 
+            font-weight: bold; 
+            margin-bottom: 30px; 
+            text-transform: uppercase; 
+            position: relative; 
+            background: var(--bg); 
+            line-height: 1.2;
+        }
+        
         .share-icon { position: absolute; bottom: 10px; right: 10px; cursor: pointer; font-size: 18px; opacity: 0.6; transition: 0.3s; }
-        .share-icon:hover { opacity: 1; transform: scale(1.1); }
 
-        .image-wrapper { text-align: center; margin: 40px 0; display: none; }
+        /* IMAGE SIZE CONTROL */
+        .image-wrapper { text-align: center; margin: 30px 0; display: none; }
         .article-img { 
             width: 100%;
-            max-width: 700px; 
-            height: auto;    
+            height: auto;
+            max-height: 350px; /* Better for mobile viewing */
             border: 2px solid var(--border); 
             display: inline-block;
             object-fit: cover; 
         }
 
-        .content-body { font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; margin-bottom: 20px; }
+        @media (min-width: 1024px) {
+            .article-img {
+                width: 90%; /* Slight padding from container edges on PC */
+                max-height: 400px; /* Limits vertical space on desktop */
+            }
+        }
+
+        .content-body { 
+            font-size: 1.2rem; 
+            line-height: 1.8; 
+            white-space: pre-wrap; 
+            margin-bottom: 25px; 
+        }
 
         .feedback-section { border-top: 2px solid var(--border); margin-top: 50px; padding-top: 10px; display: flex; flex-direction: column; background: var(--bg); }
-        
-        #feedback-message { 
-            display: none; 
-            margin: 10px 0 20px 0; 
-            padding: 15px;
-            border: 2px solid var(--border);
-            background: var(--accent);
-            text-align: center;
-            font-size: 0.85rem; 
-            font-weight: bold;
-            color: var(--text);
-            animation: slideDown 0.4s ease-out;
-        }
+        .feedback-box { width: 100%; height: 100px; padding: 15px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; resize: none; outline: none; }
+        .submit-btn { margin-top: 10px; background: var(--text); color: var(--bg); border: none; padding: 15px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.3s; }
 
-        .feedback-box { 
-            width: 100%; height: 100px; padding: 15px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; resize: none; outline: none; 
-        }
-        
-        .submit-btn { margin-top: 10px; background: var(--text); color: var(--bg); border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.3s; letter-spacing: 1px; }
-        .submit-btn:hover { opacity: 0.8; }
-        .submit-btn:disabled { opacity: 0.6; cursor: wait; }
-
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 600px) {
-            .title-box { font-size: 1.4rem; padding: 20px; }
-            .content-body { font-size: 1rem; }
+        @media (max-width: 768px) {
+            .container { max-width: 100%; }
+            .title-box { font-size: 1.5rem; padding: 30px 15px; }
+            .content-body { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -81,7 +87,7 @@
 
     <div class="container">
         <a href="index.html" class="back-btn">← BACK</a>
-        <div id="loader" style="text-align: center; margin-top: 50px;">Loading article...</div>
+        <div id="loader" style="text-align: center; margin-top: 50px;">Loading...</div>
 
         <div id="article-content" style="display: none;">
             <div class="title-box">
@@ -92,13 +98,13 @@
             <div class="content-body" id="postBodyTop"></div>
             
             <div class="image-wrapper" id="imgContainer">
-                <img src="" alt="Post Image" class="article-img" id="postImage">
+                <img src="" alt="Article Image" class="article-img" id="postImage">
             </div>
             
             <div class="content-body" id="postBodyBottom"></div>
 
             <div class="feedback-section">
-                <div id="feedback-message">MESSAGE RECEIVED. THANK YOU FOR READING.</div>
+                <div id="feedback-message" style="display:none; padding:10px; border:2px solid var(--border); margin-bottom:10px; text-align:center; font-weight:bold;">MESSAGE RECEIVED. THANK YOU.</div>
                 <textarea id="feedbackText" class="feedback-box" placeholder="Write your thoughts anonymously..."></textarea>
                 <button id="submitBtn" class="submit-btn" onclick="sendFeedback()">send</button>
             </div>
@@ -106,12 +112,9 @@
     </div>
 
     <script>
-        // Theme detection
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.remove('dark-mode');
-        } else {
-            document.body.classList.add('dark-mode');
-        }
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') { document.body.classList.remove('dark-mode'); } 
+        else { document.body.classList.add('dark-mode'); }
 
         const params = new URLSearchParams(window.location.search);
         const fileName = params.get('file');
@@ -122,77 +125,50 @@
                 const response = await fetch(`data/${fileName}`);
                 const data = await response.json();
                 const content = data[lang];
-                
                 document.getElementById('postTitle').innerText = content.title;
                 document.getElementById('postImage').src = data.image;
                 
-                const fullText = content.body;
-                if (fullText.includes("[IMAGE]")) {
-                    const parts = fullText.split("[IMAGE]");
+                const fullBody = content.body;
+                if (fullBody.includes("[IMAGE]")) {
+                    const parts = fullBody.split("[IMAGE]");
                     document.getElementById('postBodyTop').innerHTML = parts[0];
                     document.getElementById('postBodyBottom').innerHTML = parts[1] || "";
                     document.getElementById('imgContainer').style.display = "block";
                 } else {
-                    document.getElementById('postBodyTop').innerHTML = fullText;
+                    document.getElementById('postBodyTop').innerHTML = fullBody;
                 }
                 
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('article-content').style.display = 'block';
-                document.title = content.title + " - gopikaran writes";
-            } catch (e) { 
-                console.error(e);
-                document.getElementById('loader').innerText = "Error loading article.";
-            }
+                document.title = content.title;
+            } catch (e) { document.getElementById('loader').innerText = "Failed to load."; }
         }
 
         async function sendFeedback() {
             const fbBox = document.getElementById('feedbackText');
-            const msg = document.getElementById('feedback-message');
             const btn = document.getElementById('submitBtn');
-            
+            const msg = document.getElementById('feedback-message');
             if (!fbBox.value.trim()) return;
-            
-            const url = 'https://script.google.com/macros/s/AKfycbwW7-CrfC1irHkYLRr_UQ_QQutZf8Q70CepgPMGiW4Vt7MgbW3ChcB8HG_Gwl3LZHsw/exec';
             
             btn.disabled = true;
             btn.innerText = "SENDING...";
             
             try {
-                await fetch(url, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify({ 
-                        tabName: fileName.split('.')[0], 
-                        feedback: fbBox.value, 
-                        timestamp: new Date().toLocaleString() 
-                    }) 
+                await fetch('https://script.google.com/macros/s/AKfycbwW7-CrfC1irHkYLRr_UQ_QQutZf8Q70CepgPMGiW4Vt7MgbW3ChcB8HG_Gwl3LZHsw/exec', { 
+                    method: 'POST', mode: 'no-cors', 
+                    body: JSON.stringify({ tabName: fileName.split('.')[0], feedback: fbBox.value, timestamp: new Date().toLocaleString() }) 
                 });
-                
                 fbBox.value = "";
                 msg.style.display = "block";
                 btn.innerText = "SENT";
-                
-                setTimeout(() => { 
-                    msg.style.display = "none"; 
-                    btn.disabled = false;
-                    btn.innerText = "send";
-                }, 6000);
-            } catch (e) { 
-                alert("Could not send feedback."); 
-                btn.disabled = false;
-                btn.innerText = "send";
-            }
+                setTimeout(() => { msg.style.display = "none"; btn.disabled = false; btn.innerText = "send"; }, 6000);
+            } catch (e) { btn.disabled = false; btn.innerText = "send"; }
         }
 
         function shareArticle() {
-            if (navigator.share) {
-                navigator.share({ title: document.title, url: window.location.href });
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert("Link copied to clipboard!");
-            }
+            if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); } 
+            else { navigator.clipboard.writeText(window.location.href); alert("Link copied!"); }
         }
-        
         fetchArticle();
     </script>
 </body>
