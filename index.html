@@ -214,25 +214,18 @@
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         typeEffect('siteDesc', uiText[currentLang].desc);
 
-        allArticles.forEach((art) => {
+                allArticles.forEach((art) => {
             const card = document.createElement('a');
             card.className = 'card article-item';
             card.href = `content.html?file=${art.fileSource}&lang=${currentLang}`;
             
-            // ---> FIXED DEEP SEARCH LOGIC <---
-            // Combines Title, Tags, and the full Content of the article into the search data
-            const searchData = (
-                (art[currentLang].title || "") + " " + 
-                (art.tags || "") + " " + 
-                (art[currentLang].content || "")
-            ).toLowerCase();
+            // This line ensures it searches tags, titles, and body text in ALL languages
+            card.setAttribute('data-searchable', JSON.stringify(art).toLowerCase());
             
-            card.setAttribute('data-searchable', searchData);
-            // ---> END FIXED DEEP SEARCH LOGIC <---
-
             card.innerHTML = `<div class="card-img"><img src="${art.image}"></div><div class="card-title">${art[currentLang].title}</div>`;
             grid.appendChild(card);
         });
+
     }
 
     function deepSearch() {
