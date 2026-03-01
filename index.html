@@ -47,17 +47,44 @@
         .hero-container { width: 100%; margin-top: 15px; padding: 0 5px; display: flex; flex-direction: column; gap: 8px; }
         @media (min-width: 1024px) { .hero-container { max-width: 1100px; margin: 30px auto 0; } }
 
+        /* ---> UPDATED BANNER CSS <--- */
         .description-box { 
             border: 2px solid var(--border); 
-            padding: 15px 10px; 
-            font-style: italic; font-weight: bold; text-align: center;
-            font-size: 0.8rem; line-height: 1.6; min-height: 100px;
-            display: flex; align-items: center; justify-content: center;
-            white-space: normal; /* Preserves your line breaks */
+            padding: 20px 15px; 
+            text-align: center;
+            line-height: 1.6; 
+            min-height: 80px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            flex-wrap: wrap; 
+            gap: 8px; 
         }
 
-        @keyframes blink { 50% { opacity: 0; } }
-        .cursor { display: inline-block; width: 12px; height: 18px; background-color: var(--text); vertical-align: middle; margin-left: 4px; animation: blink 0.8s infinite; }
+        .banner-main {
+            font-weight: bold;
+            font-style: normal;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .banner-sub {
+            font-weight: normal;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            .description-box {
+                flex-direction: column; 
+                gap: 4px;
+                padding: 15px 10px;
+            }
+            .banner-main { font-size: 0.9rem; }
+            .banner-sub { font-size: 0.8rem; display: block; }
+        }
+        /* ---> END UPDATED BANNER CSS <--- */
 
         /* FILTERS - CENTERED */
         .hero-side-nav { display: flex; gap: 8px; justify-content: center; width: 100%; margin-top: 5px; } 
@@ -141,18 +168,10 @@
         renderUI();
     }
 
+    // Direct insertion so HTML tags render properly
     function typeEffect(elementId, text) {
-        let i = 0; const el = document.getElementById(elementId); el.innerHTML = "";
-        function type() {
-            if (i < text.length) { 
-                el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>'; 
-                i++; 
-                setTimeout(type, 30); // Faster typing for long manifesto
-            } else { 
-                el.innerHTML = text + '<span class="cursor"></span>'; 
-            }
-        }
-        type();
+        const el = document.getElementById(elementId);
+        el.innerHTML = text; 
     }
 
     async function init() {
@@ -174,11 +193,24 @@
 
     function renderUI() {
         const grid = document.getElementById('grid'); grid.innerHTML = '';
+        
+        // ---> UPDATED MULTI-LANGUAGE TEXT <---
         const uiText = {
-            en: { name: "Karan 🌤️", desc: `BY GEN Z | FOR EVERYONE` },
-            ta: { name: "கran 🌤️", desc: `BY GEN Z | FOR EVERYONE` },
-            hi: { name: "कran 🌤️", desc: `यहाँ आपको उत्तर नहीं मिलेंगे;\nइसके बजाय प्रश्न ही अधिक होंगे।\nलेकिन वही प्रश्न\nआपको ज्ञान के स्थान की ओर ले जाएँगे।` }
+            en: { 
+                name: "Karan 🌤️", 
+                desc: `<span class="banner-main">BY GEN Z | FOR EVERYONE</span><span class="banner-sub">— A record of curiosity and unfinished thoughts.</span>` 
+            },
+            ta: { 
+                name: "கran 🌤️", 
+                desc: `<span class="banner-main">BY GEN Z | அனைவருக்காக</span><span class="banner-sub">— ஒரு தேடல் மற்றும் முடிவடையாத சிந்தனைகளின் பதிவு.</span>` 
+            },
+            hi: { 
+                name: "कran 🌤️", 
+                desc: `<span class="banner-main">BY GEN Z | सबके लिए</span><span class="banner-sub">— जिज्ञासा और अधूरी सोच का एक रिकॉर्ड।</span>` 
+            }
         };
+        // ---> END UPDATED MULTI-LANGUAGE TEXT <---
+
         document.getElementById('siteName').innerText = uiText[currentLang].name;
         typeEffect('siteDesc', uiText[currentLang].desc);
 
